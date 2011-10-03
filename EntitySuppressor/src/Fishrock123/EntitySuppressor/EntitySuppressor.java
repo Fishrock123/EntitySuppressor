@@ -31,7 +31,7 @@ public class EntitySuppressor extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvent(Event.Type.CREATURE_SPAWN, this.eListener, Event.Priority.Normal, this);
 		PluginDescriptionFile pdfFile = getDescription();
-		this.l.info(pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled! ^_^ ");
+		this.l.info(pdfFile.getName() + " BETA " + " version " + pdfFile.getVersion() + " is enabled! ^_^ ");
 		ESEntityListener.init();
 		if (this.d == true) {
 			this.l.info("ES NOTICE: Running in debug mode!");

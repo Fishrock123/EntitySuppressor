@@ -57,13 +57,13 @@ public class ESEntityListener extends EntityListener {
 					HashSet<LivingEntity> eSet = new HashSet<LivingEntity>(w.getLivingEntities());
 					int lEs = eSet.size() - w.getPlayers().size();
 
-					if (lEs >= p.maxM) {
+					if ((lEs >= p.maxM) && (!w.getAllowMonsters() == false)) {
 						w.setSpawnFlags(false, w.getAllowAnimals());
 						if (p.d == true) {
 							p.l.info("Monsters Disabled in " + w.getName());
 						}
 					}
-					else if (lEs < (p.maxM - p.cD)) {
+					else if ((lEs < (p.maxM - p.cD)) && (!w.getAllowMonsters() == true)) {
 						w.setSpawnFlags(true, w.getAllowAnimals());
 						if (p.d == true) {
 							p.l.info("Monsters Enabled in " + w.getName());
