@@ -1,19 +1,21 @@
 package Fishrock123.EntitySuppressor;
 
 import java.io.File;
+import java.util.List;
+
 import org.bukkit.util.config.Configuration;
 
 public class Config {
 	private static EntitySuppressor p;
-	public String directory = "plugins" + File.separator + "EntitySuppressor";
-	File f = new File(this.directory + File.separator + "config.yml");
+	public String dir = "plugins" + File.separator + "EntitySuppressor";
+	File f = new File(this.dir + File.separator + "config.yml");
 
 	public Config(EntitySuppressor instance) {
 		p = instance;
 	}
 
   	public void configCheck() {
-  		new File(this.directory).mkdir();
+  		new File(this.dir).mkdir();
 
   		if (!this.f.exists()) {
   			try {
@@ -29,9 +31,9 @@ public class Config {
   		}
   	}
 
-  	private void write(String root, Object x) {
+  	private void write(String root, Object o) {
   		Configuration config = load();
-  		config.setProperty(root, x);
+  		config.setProperty(root, o);
   		config.save();
   	}
 
@@ -44,7 +46,12 @@ public class Config {
   		Configuration config = load();
   		return config.getInt(root, 0);
   	}
-
+  	
+    private List<String> readStringList(String root){
+        Configuration config = load();
+        return config.getStringList(root, null);
+    }
+  	
   	private Configuration load() {
   		try {
   			Configuration config = new Configuration(this.f);
@@ -59,12 +66,14 @@ public class Config {
 
   	private void addDefaults() {
   		p.l.info("ES Generating Config File... :D");
-  		write("ESConfigVersion; DO NOT CHANGE!", Double.valueOf(0.1D));
-  		write("maxMonsters", Integer.valueOf(64));
-   	 	write("checkDifference", Integer.valueOf(8));
-   	 	write("limitSquid", Boolean.valueOf(true));
-   	 	write("SpawnFlagsCheckInterval", Integer.valueOf(200));
-   	 	write("debug", Boolean.valueOf(false));
+  		write("ESConfigVersion; DO NOT CHANGE!", 0.1);
+  		write("maxMonsters", 64);
+   	 	write("checkDifference", 8);
+   	 	write("limitSquid", true);
+   	 	write("SpawnFlagsCheckInterval", 200);
+   	 	String[] dsl = {"null_example_world", "null_example_world_nether"};
+   	 	write("nonLimitedWorlds", dsl);
+   	 	write("debug", false);
    	 	loadkeys();
   	}
 
@@ -72,8 +81,10 @@ public class Config {
   		p.l.info("ES Loading Config File... :D");
   		p.maxM = readInt("maxMonsters");
   		p.cD = readInt("checkDifference");
-  		p.lS = readBoolean("limitSquid").booleanValue();
+  		p.lS = readBoolean("limitSquid");
   		p.i = readInt("SpawnFlagsCheckInterval");
-  		p.d = readBoolean("debug").booleanValue();
+  		p.eW = readStringList("nonLimitedWorlds");
+  		p.d = readBoolean("debug");
+  		p.processWL();
   	}
 }
