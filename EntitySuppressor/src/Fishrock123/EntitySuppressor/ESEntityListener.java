@@ -15,56 +15,99 @@ public class ESEntityListener extends EntityListener {
 	public ESEntityListener(EntitySuppressor instance) {
 		p = instance;
 	}
-
-	public void onCreatureSpawn(CreatureSpawnEvent e) {
+	
+	public static int getwMax(World w) {
+		if (p.wMs != null
+				&& p.wMs.containsKey(w.getName())) {
+			int wMax = (Integer)p.wMs.get(w.getName());
 		
-		if ((!e.isCancelled()) && (
-				(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) 
-				|| (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER)) && (
-						p.wl != null) && (
-								p.wl.contains(e.getLocation().getWorld()))) {
-				
-			HashSet<LivingEntity> eSet = new HashSet<LivingEntity>(e.getLocation().getWorld().getLivingEntities());
-			int lEs = eSet.size() - e.getLocation().getWorld().getPlayers().size();
-				
-			if ((p.d == true) && (
-					(e.getCreatureType() == CreatureType.CHICKEN) 
-					|| (e.getCreatureType() == CreatureType.COW) 
-					|| (e.getCreatureType() == CreatureType.PIG) 
-					|| (e.getCreatureType() == CreatureType.SHEEP) 
-					|| (e.getCreatureType() == CreatureType.WOLF))) {
-				p.l.info("Spawned " + e.getCreatureType().getName() + " in " + e.getLocation().getWorld().getName());
-			}
-
-			if ((e.getEntity() instanceof Monster) && (lEs >= p.maxM)) {
-				e.setCancelled(true);
-				e.getLocation().getWorld().setSpawnFlags(false, e.getLocation().getWorld().getAllowAnimals());
-					if (p.d == true) {
-						p.l.info("Monsters Disabled in " + e.getLocation().getWorld().getName());
-				}
-			} 
-			else if ((e.getCreatureType() == CreatureType.SQUID) && (p.lS == true) && (lEs < p.maxM)) {
-				e.setCancelled(true);
-			}
+			return wMax;
+			
+		} else {
+			return p.dMax;
+			
+		}
+	}
+	
+	public static boolean getlS(World w) {
+		if (p.lSwl != null
+				&& p.lSwl.containsKey(w.getName())) {
+			boolean wlS = (Boolean)p.lSwl.get(w.getName());
+		
+			return wlS;
+			
+		} else {
+			return p.dlS;
+			
 		}
 	}
 
-	public static void init() {
-		if (p.wl != null) {
-			Runnable r = new Runnable() {
-				public void run() {
-					for (World w : p.wl) {
+	public void onCreatureSpawn(CreatureSpawnEvent e) {
+		World w = e.getLocation().getWorld();
+		
+		if (!e.isCancelled()) {
+			
+			if (p.d == true 
+					&& (e.getCreatureType() == CreatureType.CHICKEN
+						|| e.getCreatureType() == CreatureType.COW 
+						|| e.getCreatureType() == CreatureType.PIG 
+						|| e.getCreatureType() == CreatureType.SHEEP 
+						|| e.getCreatureType() == CreatureType.WOLF)) {
+				p.l.info("Spawned " + e.getCreatureType().getName() + " in " + w.getName());
+			}
+			if ((e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL 
+					|| e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER) 
+				&& p.wl != null 
+				&& p.wl.contains(w)) {
+			
+				if (e.getSpawnReason() != CreatureSpawnEvent.SpawnReason.SPAWNER 
+						|| getlS(w) == true) {
+				
+					int lEs = w.getLivingEntities().size() - w.getPlayers().size();
 					
-						HashSet<LivingEntity> eSet = new HashSet<LivingEntity>(w.getLivingEntities());
-						int lEs = eSet.size() - w.getPlayers().size();
-
-						if ((lEs >= p.maxM) && (!w.getAllowMonsters() == false)) {
+					if (e.getEntity() instanceof Monster 
+							&& lEs >= getwMax(w)) {
+						e.setCancelled(true);
+						if (p.uSF == true) {
 							w.setSpawnFlags(false, w.getAllowAnimals());
 							if (p.d == true) {
 								p.l.info("Monsters Disabled in " + w.getName());
 							}
 						}
-						else if ((lEs < (p.maxM - p.cD)) && (!w.getAllowMonsters() == true)) {
+					} 
+					else if ((e.getCreatureType() == CreatureType.SQUID) && (p.lSQ == true) && (lEs < getwMax(w))) {
+						e.setCancelled(true);
+					}
+				}
+			}
+		}
+	}
+
+	public static void init() {
+		if (p.wl != null
+				&& p.uSF == true) {
+			Runnable r = new Runnable() {
+				public void run() {
+					for (World w : p.wl) {
+						
+						HashSet<LivingEntity> eSet = new HashSet<LivingEntity>(w.getLivingEntities());
+						int lEs = eSet.size() - w.getPlayers().size();
+						int wcD;
+						if (p.cDne = true) {
+							wcD = getwMax(w) / 8;
+						} else {
+							wcD = p.cD;
+						}
+
+						if (lEs >= getwMax(w) 
+								&& !w.getAllowMonsters() == false) {
+							w.setSpawnFlags(false, w.getAllowAnimals());
+							if (p.d == true) {
+								p.l.info("Monsters Disabled in " + w.getName());
+							}
+						}
+						else if (lEs < (getwMax(w) - wcD) 
+								&& !w.getAllowMonsters() == true) {
 							w.setSpawnFlags(true, w.getAllowAnimals());
 							if (p.d == true) {
 								p.l.info("Monsters Enabled in " + w.getName());
