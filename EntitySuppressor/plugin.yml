@@ -1,6 +1,7 @@
 name: EntitySuppressor
 main: Fishrock123.EntitySuppressor.EntitySuppressor
-version: 1.3 (1H4)
+version: 1.4 (1I5)
+website: http://dev.bukkit.org/server-mods/entitysuppressor/
 description: >
     EntitySuppressor: Take unnecessary stress off your server!
 commands:
@@ -11,5 +12,11 @@ commands:
             /es count all - Returns a count of all Living Entities in all worlds.
 permissions:
     esuppressor.count:
-        description: Allows /es count (all).
-        default: op      
+        description: Allows /es count (all / world).
+        default: op   
+    esuppressor.remove:
+        description: Allows /es remove (all / world).
+        default: op 
+    esuppressor.print:
+        description: Allows /es print.
+        default: op 

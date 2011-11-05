@@ -1,10 +1,7 @@
 package Fishrock123.EntitySuppressor;
 
-import java.util.HashSet;
-
 import org.bukkit.World;
 import org.bukkit.entity.CreatureType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityListener;
@@ -37,7 +34,7 @@ public class ESEntityListener extends EntityListener {
 			return wlS;
 			
 		} else {
-			return p.dlS;
+			return p.lS;
 			
 		}
 	}
@@ -55,62 +52,61 @@ public class ESEntityListener extends EntityListener {
 						|| e.getCreatureType() == CreatureType.WOLF)) {
 				p.l.info("Spawned " + e.getCreatureType().getName() + " in " + w.getName());
 			}
-			if ((e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL 
-					|| e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER) 
-				&& p.wl != null 
-				&& p.wl.contains(w)) {
 			
-				if (e.getSpawnReason() != CreatureSpawnEvent.SpawnReason.SPAWNER 
-						|| getlS(w) == true) {
+			if ((e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL 
+					|| (e.getSpawnReason() != CreatureSpawnEvent.SpawnReason.SPAWNER 
+							|| getlS(w) == true))
+					&& p.wl.contains(w)) {
 				
-					int lEs = w.getLivingEntities().size() - w.getPlayers().size();
+				int lEs = w.getLivingEntities().size() - w.getPlayers().size();
 					
-					if (e.getEntity() instanceof Monster 
-							&& lEs >= getwMax(w)) {
-						e.setCancelled(true);
-						if (p.uSF == true) {
-							w.setSpawnFlags(false, w.getAllowAnimals());
-							if (p.d == true) {
-								p.l.info("Monsters Disabled in " + w.getName());
-							}
+				if (e.getEntity() instanceof Monster 
+						&& lEs >= getwMax(w)) {
+					e.setCancelled(true);
+					if (p.uSF == true) {
+						w.setSpawnFlags(false, w.getAllowAnimals());
+						if (p.d == true) {
+							p.l.info("Monsters Disabled in " + w.getName());
 						}
-					} 
-					else if ((e.getCreatureType() == CreatureType.SQUID) && (p.lSQ == true) && (lEs < getwMax(w))) {
-						e.setCancelled(true);
 					}
+				} 
+				else if ((e.getCreatureType() == CreatureType.SQUID) 
+						&& (p.lSQ == true) 
+						&& (lEs < getwMax(w))) {
+					e.setCancelled(true);
 				}
 			}
 		}
 	}
 
 	public static void init() {
-		if (p.wl != null
-				&& p.uSF == true) {
+		if (p.uSF == true) {
 			Runnable r = new Runnable() {
 				public void run() {
-					for (World w : p.wl) {
-						
-						HashSet<LivingEntity> eSet = new HashSet<LivingEntity>(w.getLivingEntities());
-						int lEs = eSet.size() - w.getPlayers().size();
-						int wcD;
-						if (p.cDne = true) {
-							wcD = getwMax(w) / 8;
-						} else {
-							wcD = p.cD;
-						}
-
-						if (lEs >= getwMax(w) 
-								&& !w.getAllowMonsters() == false) {
-							w.setSpawnFlags(false, w.getAllowAnimals());
-							if (p.d == true) {
-								p.l.info("Monsters Disabled in " + w.getName());
+			  		for (World w : p.getServer().getWorlds()) {
+			  			if (p.wl.contains(w)) {
+			  				int lEs = w.getLivingEntities().size() - w.getPlayers().size();
+							int wcD;
+							
+							if (p.cDne = true) {
+								wcD = getwMax(w) / 8;
+							} else {
+								wcD = p.cD;
 							}
-						}
-						else if (lEs < (getwMax(w) - wcD) 
-								&& !w.getAllowMonsters() == true) {
-							w.setSpawnFlags(true, w.getAllowAnimals());
-							if (p.d == true) {
-								p.l.info("Monsters Enabled in " + w.getName());
+
+							if (lEs >= getwMax(w) 
+									&& !w.getAllowMonsters() == false) {
+								w.setSpawnFlags(false, w.getAllowAnimals());
+								if (p.d == true) {
+									p.l.info("Monsters Disabled in " + w.getName());
+								}
+							}
+							else if (lEs < (getwMax(w) - wcD) 
+									&& !w.getAllowMonsters() == true) {
+								w.setSpawnFlags(true, w.getAllowAnimals());
+								if (p.d == true) {
+									p.l.info("Monsters Enabled in " + w.getName());
+								}
 							}
 						}
 					}
