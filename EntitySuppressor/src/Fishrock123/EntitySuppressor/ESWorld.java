@@ -14,7 +14,7 @@ public class ESWorld {
 	private boolean lSpawners = true;
 	
 	public ESWorld(World w) {
-		name = w.getName();
+		name = w.getName().trim();
 	}
 	
 	public void setMonsterMaximum(int i) {

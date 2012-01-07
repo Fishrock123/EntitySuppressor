@@ -23,7 +23,7 @@ public class EntitySuppressor extends JavaPlugin {
 	public int rdist;
 	public int cdist;
 
-	public final Logger l = Logger.getLogger("Minecraft");
+	public Logger l;
 	public ESConfig config;
 	public ESEntityListener eListener;
 	public ESScanner scanner;
@@ -33,6 +33,8 @@ public class EntitySuppressor extends JavaPlugin {
 	public void onEnable() {
 		final long startTime = System.nanoTime();
         final long endTime;
+        
+        l = Logger.getLogger("Minecraft");
         
         config = new ESConfig(this);
         methods = new ESMethods(this);
@@ -46,6 +48,12 @@ public class EntitySuppressor extends JavaPlugin {
   		getServer().getPluginManager().registerEvent(Event.Type.CREATURE_SPAWN, eListener, Event.Priority.Normal, this);
 		endTime = System.nanoTime();
 		l.info("EntitySuppressor version " + getDescription().getVersion() + " is enabled! {" + methods.convTime(endTime - startTime) + " ms}");
+		if (getDescription().getVersion().contains("TEST")) {
+			l.info("ES Disclaimer: ");
+			l.info("You are running a Testing version of EntitySuppressor!");
+			l.info("This version may contain unwanted bugs, ");
+			l.info(" and new features may not be fully functioning.");
+		}
 	}
 	
 	public void initialize() {

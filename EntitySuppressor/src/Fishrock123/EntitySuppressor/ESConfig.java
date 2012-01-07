@@ -114,54 +114,54 @@ public class ESConfig {
   			m.l.info("ES NOTICE: Interval time is too low! Using 10 ticks instead.");
   		}
   		for (World w : Bukkit.getServer().getWorlds()) {
-  			m.wlist.put(w.getName(), new ESWorld(w));
+  			m.wlist.put(w.getName().trim(), new ESWorld(w));
   			continue;
   		}
   		if (c.contains("MonsterMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("MonsterMaximums").getValues(true).entrySet()) {
-  				ESWorld esw =  m.wlist.get(entry.getKey());
-  				esw.setMonsterMaximum((Integer)entry.getValue());
+  				ESWorld esw =  m.wlist.get(entry.getKey().trim());
+  				esw.setMonsterMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("SquidMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("SquidMaximums").getValues(true).entrySet()) {
-  				ESWorld esw =  m.wlist.get(entry.getKey());
-  				esw.setSquidMaximum((Integer)entry.getValue());
+  				ESWorld esw =  m.wlist.get(entry.getKey().trim());
+  				esw.setSquidMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("AnimalMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("AnimalMaximums").getValues(true).entrySet()) {
-  				ESWorld esw =  m.wlist.get(entry.getKey());
-  				esw.setAnimalMaximum((Integer)entry.getValue());
+  				ESWorld esw =  m.wlist.get(entry.getKey().trim());
+  				esw.setAnimalMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("ChunkCalculatedMonsterMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("ChunkCalculatedMonsterMaximums").getValues(true).entrySet()) {
-  				ESWorld esw =  m.wlist.get(entry.getKey());
-  				esw.setpChunkMonsterMaximum((Integer)entry.getValue());
+  				ESWorld esw =  m.wlist.get(entry.getKey().trim());
+  				esw.setpChunkMonsterMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("ChunkCalculatedSquidMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("ChunkCalculatedSquidMaximums").getValues(true).entrySet()) {
-  				ESWorld esw =  m.wlist.get(entry.getKey());
-  				esw.setpChunkSquidMaximum((Integer)entry.getValue());
+  				ESWorld esw =  m.wlist.get(entry.getKey().trim());
+  				esw.setpChunkSquidMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("ChunkCalculatedAnimalMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("ChunkCalculatedAnimalMaximums").getValues(true).entrySet()) {
-  				ESWorld esw =  m.wlist.get(entry.getKey());
-  				esw.setpChunkAnimalMaximum((Integer)entry.getValue());
+  				ESWorld esw =  m.wlist.get(entry.getKey().trim());
+  				esw.setpChunkAnimalMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("LimitSpawners")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("LimitSpawners").getValues(true).entrySet()) {
-  				ESWorld esw =  m.wlist.get(entry.getKey());
+  				ESWorld esw =  m.wlist.get(entry.getKey().trim());
   				esw.setlSpawners((Boolean)entry.getValue());
   				continue;
   			}
