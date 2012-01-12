@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.LivingEntity;
@@ -18,6 +19,16 @@ public class ESMethods {
 	
 	public ESWorld getESWorld(World w) {
 		return m.wlist.get(w.getName());
+	}
+	
+	public int getCurrentMax(String s, String t) {
+		try {
+			World w = Bukkit.getWorld(s);
+			return getCurrentMax(w, t);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
 	
 	public int getCurrentMax(World w) {

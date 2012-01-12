@@ -20,12 +20,12 @@ public class ESEntityListener extends EntityListener {
 		World w = e.getLocation().getWorld();
 		ESWorld esw = methods.getESWorld(w);
 		
-		if (!e.isCancelled()) {
+		if (!e.isCancelled() 
+				&& esw != null) {
 			
-			if ((e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL 
+			if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL 
 					|| (e.getSpawnReason() != CreatureSpawnEvent.SpawnReason.SPAWNER 
-							|| esw.getlSpawners() == true))
-					&& esw != null) {
+							|| (esw.haslSpawners() == true && esw.getlSpawners() == true))) {
 					
 				if (e.getEntity() instanceof Monster
 						&& m.lMonsters == true) {

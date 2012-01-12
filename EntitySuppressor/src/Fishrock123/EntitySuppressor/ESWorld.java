@@ -14,7 +14,11 @@ public class ESWorld {
 	private boolean lSpawners = true;
 	
 	public ESWorld(World w) {
-		name = w.getName().trim();
+		this(w.getName());
+	}
+	
+	public ESWorld(String s) {
+		name = s;
 	}
 	
 	public void setMonsterMaximum(int i) {
@@ -99,6 +103,12 @@ public class ESWorld {
 	}
 	public boolean haspChunkAnimalMaximum() {
 		if (pChunkAnimalMaximum > 0) {
+			return true;
+		}
+		return false;
+	}
+	public boolean haslSpawners() {
+		if (lSpawners) {
 			return true;
 		}
 		return false;

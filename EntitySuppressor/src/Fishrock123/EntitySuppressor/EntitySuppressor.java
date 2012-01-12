@@ -2,9 +2,9 @@ package Fishrock123.EntitySuppressor;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
@@ -61,12 +61,10 @@ public class EntitySuppressor extends JavaPlugin {
 		config.load();
 		//processWL();
 		
-  		for (World w : getServer().getWorlds()) {
-  			if (wlist.containsKey(w.getName())) {
-  				l.info("ES: Maximum monsters in " + w.getName() + " is: " + methods.getCurrentMax(w, "Monster"));
-  				l.info("ES: Maximum squid in " + w.getName() + " is: " + methods.getCurrentMax(w, "Squid"));
-  				l.info("ES: Maximum animals in " + w.getName() + " is: " + methods.getCurrentMax(w, "Animal"));
-  			}
+  		for (Entry<String, ESWorld> e : wlist.entrySet()) {
+  			l.info("ES: Maximum monsters in `" + e.getKey() + "` is currently: " + methods.getCurrentMax(e.getKey(), "Monster"));
+  			l.info("ES: Maximum squid in `" + e.getKey() + "` is currently: " + methods.getCurrentMax(e.getKey(), "Squid"));
+  			l.info("ES: Maximum animals in `" + e.getKey() + "` is currently: " + methods.getCurrentMax(e.getKey(), "Animal"));
   		}
 		
 		scanner.init();

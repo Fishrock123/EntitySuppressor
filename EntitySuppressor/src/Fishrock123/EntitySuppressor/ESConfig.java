@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map.Entry;
 
-import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class ESConfig {
@@ -113,56 +111,73 @@ public class ESConfig {
   			m.i = 10;
   			m.l.info("ES NOTICE: Interval time is too low! Using 10 ticks instead.");
   		}
-  		for (World w : Bukkit.getServer().getWorlds()) {
-  			m.wlist.put(w.getName().trim(), new ESWorld(w));
-  			continue;
-  		}
   		if (c.contains("MonsterMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("MonsterMaximums").getValues(true).entrySet()) {
-  				ESWorld esw =  m.wlist.get(entry.getKey().trim());
+  				if (!m.wlist.containsKey(entry.getKey())) {
+  					m.wlist.put(entry.getKey(), new ESWorld(entry.getKey()));
+  				}
+  				ESWorld esw =  m.wlist.get(entry.getKey());
   				esw.setMonsterMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("SquidMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("SquidMaximums").getValues(true).entrySet()) {
-  				ESWorld esw =  m.wlist.get(entry.getKey().trim());
+  				if (!m.wlist.containsKey(entry.getKey())) {
+  					m.wlist.put(entry.getKey(), new ESWorld(entry.getKey()));
+  				}
+  				ESWorld esw =  m.wlist.get(entry.getKey());
   				esw.setSquidMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("AnimalMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("AnimalMaximums").getValues(true).entrySet()) {
-  				ESWorld esw =  m.wlist.get(entry.getKey().trim());
+  				if (!m.wlist.containsKey(entry.getKey())) {
+  					m.wlist.put(entry.getKey(), new ESWorld(entry.getKey()));
+  				}
+  				ESWorld esw =  m.wlist.get(entry.getKey());
   				esw.setAnimalMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("ChunkCalculatedMonsterMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("ChunkCalculatedMonsterMaximums").getValues(true).entrySet()) {
-  				ESWorld esw =  m.wlist.get(entry.getKey().trim());
+  				if (!m.wlist.containsKey(entry.getKey())) {
+  					m.wlist.put(entry.getKey(), new ESWorld(entry.getKey()));
+  				}
+  				ESWorld esw =  m.wlist.get(entry.getKey());
   				esw.setpChunkMonsterMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("ChunkCalculatedSquidMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("ChunkCalculatedSquidMaximums").getValues(true).entrySet()) {
-  				ESWorld esw =  m.wlist.get(entry.getKey().trim());
+  				if (!m.wlist.containsKey(entry.getKey())) {
+  					m.wlist.put(entry.getKey(), new ESWorld(entry.getKey()));
+  				}
+  				ESWorld esw =  m.wlist.get(entry.getKey());
   				esw.setpChunkSquidMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("ChunkCalculatedAnimalMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("ChunkCalculatedAnimalMaximums").getValues(true).entrySet()) {
-  				ESWorld esw =  m.wlist.get(entry.getKey().trim());
+  				if (!m.wlist.containsKey(entry.getKey())) {
+  					m.wlist.put(entry.getKey(), new ESWorld(entry.getKey()));
+  				}
+  				ESWorld esw =  m.wlist.get(entry.getKey());
   				esw.setpChunkAnimalMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("LimitSpawners")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("LimitSpawners").getValues(true).entrySet()) {
-  				ESWorld esw =  m.wlist.get(entry.getKey().trim());
-  				esw.setlSpawners((Boolean)entry.getValue());
+  				if (!m.wlist.containsKey(entry.getKey())) {
+  					m.wlist.put(entry.getKey(), new ESWorld(entry.getKey()));
+  				}
+  				ESWorld esw =  m.wlist.get(entry.getKey());
+  				esw.setlSpawners(Boolean.parseBoolean(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
