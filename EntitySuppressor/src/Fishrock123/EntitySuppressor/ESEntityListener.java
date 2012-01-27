@@ -9,8 +9,8 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityListener;
 
 public class ESEntityListener extends EntityListener {
-	private static EntitySuppressor m;
-	private static ESMethods methods;
+	private EntitySuppressor m;
+	private ESMethods methods;
 	public ESEntityListener(EntitySuppressor instance) {
 		m = instance;
 		methods = m.methods;
@@ -42,11 +42,13 @@ public class ESEntityListener extends EntityListener {
 							&& w.getPlayers().size() >= 1) {
 						int pdc = 0;
 						double sdist = 0;
+						double pdist = 0;
 						for (Player p : w.getPlayers()) {
-							if (e.getLocation().distance(p.getLocation()) > m.cdist) {
+							pdist = e.getLocation().distance(p.getLocation());
+							if (pdist > m.cdist) {
 								pdc++;
-								if (sdist == 0 || e.getLocation().distance(p.getLocation()) < sdist) {
-									sdist = e.getLocation().distance(p.getLocation());
+								if (sdist == 0 || pdist < sdist) {
+									sdist = pdist;
 								}
 							}
 						}

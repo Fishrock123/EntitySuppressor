@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class ESConfig {
-	public static EntitySuppressor m;
+	private EntitySuppressor m;
 	public ESConfig(EntitySuppressor instance) {
 		m = instance;
 	}

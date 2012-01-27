@@ -19,7 +19,7 @@
  Very Low: Under 2GB ram, Under 2Ghz processor speed. (~1-6 players)
  Low: 3 - 4GB ram, 2 - 2.3Ghz processor speed. (~6-12 players)
  Medium (mid): 4 - 6GB ram, 2.3 - 2.7Ghz processor speed. (~12-24 players)
- High: 6 - 8+ GB ram, 2.8Ghz processor speed. (~24-32+ players)
+ High: 6 - 8+ GB ram, 2.8+Ghz processor speed. (~24-32+ players)
 
 ###############################################################
 

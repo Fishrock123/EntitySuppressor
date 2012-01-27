@@ -3,6 +3,7 @@ package Fishrock123.EntitySuppressor;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -15,9 +16,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Squid;
 
 public class ESCommands {
-	public static EntitySuppressor m;
-	private static ESMethods methods;
-	private static ESScanner scanner;
+	private EntitySuppressor m;
+	private ESMethods methods;
+	private ESScanner scanner;
 	public ESCommands(EntitySuppressor instance) {
 		m = instance;
 		methods = m.methods;
@@ -87,7 +88,7 @@ public class ESCommands {
 				
 				List<World> ewl = new ArrayList<World>();
 				if (args.length == 2 && args[1].equalsIgnoreCase("all")) ewl.addAll(m.getServer().getWorlds());
-				if (args.length == 2 && m.getServer().getWorlds().contains(args[1])) ewl.add(m.getServer().getWorld(args[1]));
+				if (args.length == 2 && m.getServer().getWorlds().contains(Bukkit.getWorld(args[1]))) ewl.add(m.getServer().getWorld(args[1]));
 				if (args.length == 1 && s instanceof Player) ewl.add(((Player)s).getWorld());
 				if (!(s instanceof Player)) ewl.addAll(m.getServer().getWorlds());
 					
@@ -133,7 +134,7 @@ public class ESCommands {
 				}
 				List<World> ewl = new ArrayList<World>();
 				if (args.length == 3 && args[2].equalsIgnoreCase("all")) ewl.addAll(m.getServer().getWorlds());
-				if (args.length == 3 && m.getServer().getWorlds().contains(args[2])) ewl.add(m.getServer().getWorld(args[2]));
+				if (args.length == 3 && m.getServer().getWorlds().contains(Bukkit.getWorld(args[2]))) ewl.add(m.getServer().getWorld(args[2]));
 				if (args.length == 2 && s instanceof Player) ewl.add(((Player)s).getWorld());
 				if (args.length == 2 && !(s instanceof Player)) ewl.addAll(m.getServer().getWorlds());
 				

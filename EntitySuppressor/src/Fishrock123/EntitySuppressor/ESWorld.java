@@ -5,6 +5,7 @@ import org.bukkit.World;
 
 public class ESWorld {
 	private String name;
+	private int loadedChunks = 0;
 	private short MonsterMaximum;
 	private short SquidMaximum;
 	private short AnimalMaximum;
@@ -19,6 +20,10 @@ public class ESWorld {
 	
 	public ESWorld(String s) {
 		name = s;
+	}
+	
+	public void update(Integer i) {
+		loadedChunks = i;
 	}
 	
 	public void setMonsterMaximum(int i) {
@@ -48,6 +53,9 @@ public class ESWorld {
 	}
 	public String getName() {
 		return name;
+	}
+	public int getLoadedChunks() {
+		return loadedChunks;
 	}
 	public int getMonsterMaximum() {
 		return MonsterMaximum;

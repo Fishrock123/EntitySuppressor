@@ -12,7 +12,7 @@ import org.bukkit.entity.Monster;
 import org.bukkit.entity.Squid;
 
 public class ESMethods {
-	public static EntitySuppressor m;
+	private EntitySuppressor m;
 	public ESMethods(EntitySuppressor instance) {
 		m = instance;
 	}
@@ -44,8 +44,8 @@ public class ESMethods {
 			if (s.equals("Monster") 
 					&& esw.hasMonsterMaximum()) {
 				if (esw.haspChunkMonsterMaximum()
-						&& ((esw.getpChunkMonsterMaximum() * w.getLoadedChunks().length) / 256) <= esw.getMonsterMaximum()) {
-						return ((esw.getpChunkMonsterMaximum() * w.getLoadedChunks().length) / 256);
+						&& ((esw.getpChunkMonsterMaximum() * esw.getLoadedChunks()) / 256) <= esw.getMonsterMaximum()) {
+						return ((esw.getpChunkMonsterMaximum() * esw.getLoadedChunks()) / 256);
 				} else {
 					return esw.getMonsterMaximum();
 				}
@@ -53,8 +53,8 @@ public class ESMethods {
 			if (s.equals("Squid")  
 					&& esw.hasSquidMaximum()) {
 				if (esw.haspChunkSquidMaximum()
-						&& ((esw.getpChunkSquidMaximum() * w.getLoadedChunks().length) / 256) <= esw.getSquidMaximum()) {
-						return ((esw.getpChunkSquidMaximum() * w.getLoadedChunks().length) / 256);
+						&& ((esw.getpChunkSquidMaximum() * esw.getLoadedChunks()) / 256) <= esw.getSquidMaximum()) {
+						return ((esw.getpChunkSquidMaximum() * esw.getLoadedChunks()) / 256);
 				} else {
 					return esw.getSquidMaximum();
 				}
@@ -62,14 +62,14 @@ public class ESMethods {
 			if (s.equals("Animal")  
 					&& esw.hasAnimalMaximum()) {
 				if (esw.haspChunkAnimalMaximum()
-						&& ((esw.getpChunkAnimalMaximum() * w.getLoadedChunks().length) / 256) <= esw.getAnimalMaximum()) {
-						return ((esw.getpChunkAnimalMaximum() * w.getLoadedChunks().length) / 256);
+						&& ((esw.getpChunkAnimalMaximum() * esw.getLoadedChunks()) / 256) <= esw.getAnimalMaximum()) {
+						return ((esw.getpChunkAnimalMaximum() * esw.getLoadedChunks()) / 256);
 				} else {
 					return esw.getAnimalMaximum();
 				}
 			}
 			if (s.equals("null")) {
-				return ((esw.getpChunkAnimalMaximum() * w.getLoadedChunks().length) / 256) + ((esw.getpChunkSquidMaximum() * w.getLoadedChunks().length) / 256) + ((esw.getpChunkMonsterMaximum() * w.getLoadedChunks().length) / 256);
+				return ((esw.getpChunkAnimalMaximum() * esw.getLoadedChunks()) / 256) + ((esw.getpChunkSquidMaximum() * esw.getLoadedChunks()) / 256) + ((esw.getpChunkMonsterMaximum() * esw.getLoadedChunks()) / 256);
 			}
 			
 		} else {

@@ -36,8 +36,8 @@ public class EntitySuppressor extends JavaPlugin {
         
         l = Logger.getLogger("Minecraft");
         
-        config = new ESConfig(this);
         methods = new ESMethods(this);
+        config = new ESConfig(this);
         eListener = new ESEntityListener(this);
         scanner = new ESScanner(this);
         
@@ -59,7 +59,6 @@ public class EntitySuppressor extends JavaPlugin {
 	public void initialize() {
 		config.generate();
 		config.load();
-		//processWL();
 		
   		for (Entry<String, ESWorld> e : wlist.entrySet()) {
   			l.info("ES: Maximum monsters in `" + e.getKey() + "` is currently: " + methods.getCurrentMax(e.getKey(), "Monster"));
@@ -74,33 +73,6 @@ public class EntitySuppressor extends JavaPlugin {
 		scanner.deinit();
 		l.info("EntitySuppressor Disabled!");
 	}
-	
-	/*public void processWL() {
-		wlist = getServer().getWorlds();
-		for (ListIterator<World> it = wlist.listIterator(); it.hasNext(); ) {
-			String n = it.next().getName();
-			if (wMaximums.containsKey(n) 
-					&& wMaximums.get(n) instanceof Boolean
-				 	&& ((Boolean)wMaximums.get(n) == false)) {
-				it.remove();
-				l.info("ES: No monster limit in " + n);
-				if (wlist == null) {
-					l.info("ES NOTICE: Not using limiter as all worlds have been exempted.");
-				}
-			}
-			if (wMaximums.containsKey(n) 
-					&& ((wMaximums.get(n) instanceof Boolean
-							&& (Boolean)wMaximums.get(n) == true) 
-					|| (wMaximums.get(n) instanceof Integer
-							&& (Integer)wMaximums.get(n) == 0))) {
-				it.remove();
-				World w = getServer().getWorld(n);
-				w.setSpawnFlags(false, w.getAllowAnimals());
-				l.info("ES: Monsters disabled in " + n);
-			}
-			//Else: Skip rope.
-		}
-	}*/
 
 	public boolean onCommand(CommandSender s, Command cmd, String cLabel, String[] args) {
 		return commands.commandProcess(s, cmd, cLabel, args);

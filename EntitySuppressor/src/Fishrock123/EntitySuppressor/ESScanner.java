@@ -1,14 +1,18 @@
 package Fishrock123.EntitySuppressor;
 
+import java.util.Map.Entry;
+
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 
 public class ESScanner {
-	private static int Scan;
-	private static EntitySuppressor m;
-	private static ESMethods methods;
+	private int Scan;
+	private int Update;
+	private EntitySuppressor m;
+	private ESMethods methods;
 	public ESScanner(EntitySuppressor instance) {
 		m = instance;
 		methods = m.methods;
@@ -25,11 +29,13 @@ public class ESScanner {
 									&& w.getPlayers().size() >= 1) {
 								int pdc = 0;
 								double sdist = 0;
+								double pdist = 0;
 								for (Player p : w.getPlayers()) {
-									if (e.getLocation().distance(p.getLocation()) > m.rdist) {
+									pdist = e.getLocation().distance(p.getLocation());
+									if (pdist > m.rdist) {
 										pdc++;
-										if (sdist == 0 || e.getLocation().distance(p.getLocation()) < sdist) {
-											sdist = e.getLocation().distance(p.getLocation());
+										if (sdist == 0 || pdist < sdist) {
+											sdist = pdist;
 										}
 									}
 								}
@@ -45,18 +51,18 @@ public class ESScanner {
 	  				
 	  				if (m.uSFlags == true) {
 	  					
-	  					int lEntities = w.getLivingEntities().size() - w.getPlayers().size();
+	  					int mobs = w.getLivingEntities().size() - w.getPlayers().size();
 	  					
 	  					if (m.lMonsters == true) {
 					
-	  						if (lEntities >= methods.getCurrentMax(w, "Monster") 
+	  						if (mobs >= methods.getCurrentMax(w, "Monster") 
 	  								&& !w.getAllowMonsters() == false) {
 								w.setSpawnFlags(false, w.getAllowAnimals());
 								if (m.d == true) {
 									m.l.info("ES Debug: Monsters Disabled in " + w.getName());
 								}
 	  						}
-	  						if (lEntities < (methods.getCurrentMax(w, "Monster") - (int)Math.ceil(Math.sqrt(methods.getCurrentMax(w, "Monster")))) 
+	  						if (mobs < (methods.getCurrentMax(w, "Monster") - (int)Math.ceil(Math.sqrt(methods.getCurrentMax(w, "Monster")))) 
 	  								&& !w.getAllowMonsters() == true) {
 	  							w.setSpawnFlags(true, w.getAllowAnimals());
 	  							if (m.d == true) {
@@ -66,14 +72,14 @@ public class ESScanner {
 						}
 	  					if (m.lAnimals == true) {
 					
-	  						if (lEntities >= methods.getCurrentMax(w, "Animal") 
+	  						if (mobs >= methods.getCurrentMax(w, "Animal") 
 	  								&& !w.getAllowAnimals() == false) {
 								w.setSpawnFlags(w.getAllowMonsters(), false);
 								if (m.d == true) {
 									m.l.info("ES Debug: Animals Disabled in " + w.getName());
 								}
 	  						}
-	  						if (lEntities < (methods.getCurrentMax(w, "Animal") - (int)Math.ceil(Math.sqrt(methods.getCurrentMax(w, "Animal")))) 
+	  						if (mobs < (methods.getCurrentMax(w, "Animal") - (int)Math.ceil(Math.sqrt(methods.getCurrentMax(w, "Animal")))) 
 	  								&& !w.getAllowAnimals() == true) {
 	  							w.setSpawnFlags(w.getAllowMonsters(), true);
 	  							if (m.d == true) {
@@ -88,12 +94,23 @@ public class ESScanner {
 		}
 	};
 	
+	Runnable u = new Runnable() {
+		public void run() {
+			for (Entry<String, ESWorld> e : m.wlist.entrySet()) {
+				e.getValue().update(Bukkit.getWorld(e.getKey()).getLoadedChunks().length);
+			}
+		}
+	};
+	
 	public void init() {
 		Scan = m.getServer().getScheduler().scheduleSyncRepeatingTask(m, r, m.i, m.i);
 		r.run();
+		Update = m.getServer().getScheduler().scheduleSyncRepeatingTask(m, u, 20, 20);
+		u.run();
 	}
 
 	public void deinit() {
 		m.getServer().getScheduler().cancelTask(Scan);
+		m.getServer().getScheduler().cancelTask(Update);
   	}
 }
