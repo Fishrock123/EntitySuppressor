@@ -1,5 +1,7 @@
 package Fishrock123.EntitySuppressor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
@@ -96,8 +98,18 @@ public class ESScanner {
 	
 	Runnable u = new Runnable() {
 		public void run() {
+			List<String> worldnames = new ArrayList<String>();
+			
+			for (World w : Bukkit.getWorlds()) {
+				worldnames.add(w.getName());
+			}
+			
+			int chunks = 0;
 			for (Entry<String, ESWorld> e : m.wlist.entrySet()) {
-				e.getValue().update(Bukkit.getWorld(e.getKey()).getLoadedChunks().length);
+				if (worldnames.contains(e.getKey())) {
+					chunks = Bukkit.getWorld(e.getKey()).getLoadedChunks().length;
+				}
+				e.getValue().update(chunks);
 			}
 		}
 	};

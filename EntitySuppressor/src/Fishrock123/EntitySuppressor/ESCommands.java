@@ -30,6 +30,7 @@ public class ESCommands {
 			if (args.length == 0) {
 				return false;
 			}
+			//Version
 			if (args[0].equalsIgnoreCase("version")) {
 				s.sendMessage("This server is running EntitySuppressor version " + m.getDescription().getVersion());
 				return true;
@@ -82,15 +83,15 @@ public class ESCommands {
 						&& !s.getName().equals("Fishrock123")
 						&& !((Player)s).hasPermission("esuppressor.count")) {
         	  
-						s.sendMessage(ChatColor.DARK_RED + "Oh Noes! You don't have Permission to use that!");
-						return true;
-					}
+					s.sendMessage(ChatColor.DARK_RED + "Oh Noes! You don't have Permission to use that!");
+					return true;
+				}
 				
 				List<World> ewl = new ArrayList<World>();
 				if (args.length == 2 && args[1].equalsIgnoreCase("all")) ewl.addAll(m.getServer().getWorlds());
-				if (args.length == 2 && m.getServer().getWorlds().contains(Bukkit.getWorld(args[1]))) ewl.add(m.getServer().getWorld(args[1]));
-				if (args.length == 1 && s instanceof Player) ewl.add(((Player)s).getWorld());
-				if (!(s instanceof Player)) ewl.addAll(m.getServer().getWorlds());
+				else if (args.length == 2 && m.getServer().getWorlds().contains(Bukkit.getWorld(args[1]))) ewl.add(m.getServer().getWorld(args[1]));
+				else if (args.length == 1 && s instanceof Player) ewl.add(((Player)s).getWorld());
+				else if (s instanceof ConsoleCommandSender) ewl.addAll(m.getServer().getWorlds());
 					
 				for (World w : ewl) {
 					int ms = 0;
@@ -114,11 +115,11 @@ public class ESCommands {
 						continue;
 					}
 					
-					s.sendMessage("ES Debug: " + w.getLoadedChunks().length + " chunks loaded in `" + w.getName() + "` (" + ((double)w.getLoadedChunks().length / 256D) + ")");
-					s.sendMessage("ES: Maximum monsters in " + w.getName() + " is: " + methods.getCurrentMax(w, "Monster"));
-					s.sendMessage("ES: Maximum squid in " + w.getName() + " is: " + methods.getCurrentMax(w, "Squid"));
-					s.sendMessage("ES: Maximum animals in " + w.getName() + " is: " + methods.getCurrentMax(w, "Animal"));
-					s.sendMessage("ES Count: (" + (ms + as + ss + ps) + "): " + ms + " monsters, " + as + " animals, " + ss + " Squid, and " + ps + " players in `" + w.getName() + "`");
+					s.sendMessage("ES: " + w.getLoadedChunks().length + " chunks loaded in `" + w.getName() + "` (CCM: " + ((double)w.getLoadedChunks().length / 256D) + ")");
+					s.sendMessage("ES: Maximum monsters in `" + w.getName() + "` is: " + methods.getCurrentMax(w, "Monster"));
+					s.sendMessage("ES: Maximum squid in `" + w.getName() + "` is: " + methods.getCurrentMax(w, "Squid"));
+					s.sendMessage("ES: Maximum animals in `" + w.getName() + "` is: " + methods.getCurrentMax(w, "Animal"));
+					s.sendMessage("ES Count: (" + (ms + as + ss + ps) + "): " + ms + " monsters, " + as + " animals, " + ss + " squid, and " + ps + " players in `" + w.getName() + "`");
 					continue;
 				}
 				return true;
@@ -134,9 +135,9 @@ public class ESCommands {
 				}
 				List<World> ewl = new ArrayList<World>();
 				if (args.length == 3 && args[2].equalsIgnoreCase("all")) ewl.addAll(m.getServer().getWorlds());
-				if (args.length == 3 && m.getServer().getWorlds().contains(Bukkit.getWorld(args[2]))) ewl.add(m.getServer().getWorld(args[2]));
-				if (args.length == 2 && s instanceof Player) ewl.add(((Player)s).getWorld());
-				if (args.length == 2 && !(s instanceof Player)) ewl.addAll(m.getServer().getWorlds());
+				else if (args.length == 3 && m.getServer().getWorlds().contains(Bukkit.getWorld(args[2]))) ewl.add(m.getServer().getWorld(args[2]));
+				else if (args.length == 2 && s instanceof Player) ewl.add(((Player)s).getWorld());
+				else if (args.length == 2 && s instanceof ConsoleCommandSender) ewl.addAll(m.getServer().getWorlds());
 				
 				//All
 				if (args.length == 2 
@@ -148,9 +149,9 @@ public class ESCommands {
 							continue;
 						}
 
-						s.sendMessage("Removed all living entities in " + w.getName());
+						s.sendMessage("Removed all mobs in `" + w.getName() + "`");
 						if (!(s instanceof ConsoleCommandSender)) {
-							m.l.info("Removed all living entities in " + w.getName());
+							m.l.info("Removed all mobs in `" + w.getName() + "`");
 						}
 						continue;
 					}
@@ -166,9 +167,9 @@ public class ESCommands {
 							continue;
 						}
 
-						s.sendMessage("Removed all animals in " + w.getName());
+						s.sendMessage("Removed all animals in `" + w.getName() + "`");
 						if (!(s instanceof ConsoleCommandSender)) {
-							m.l.info("Removed all animals in " + w.getName());
+							m.l.info("Removed all animals in `" + w.getName() + "`");
 						}
 						continue;
 					}
@@ -184,9 +185,9 @@ public class ESCommands {
 							continue;
 						}
 
-						s.sendMessage("Removed all monsters in " + w.getName());
+						s.sendMessage("Removed all monsters in `" + w.getName() + "`");
 						if (!(s instanceof ConsoleCommandSender)) {
-							m.l.info("Removed all monsters in " + w.getName());
+							m.l.info("Removed all monsters in `" + w.getName() + "`");
 						}
 						continue;
 					}
@@ -202,9 +203,9 @@ public class ESCommands {
 							continue;
 						}
 
-						s.sendMessage("Removed all squid in " + w.getName());
+						s.sendMessage("Removed all squid in `" + w.getName() + "`");
 						if (!(s instanceof ConsoleCommandSender)) {
-							m.l.info("Removed all squid in " + w.getName());
+							m.l.info("Removed all squid in `" + w.getName() + "`");
 						}
 						continue;
 					}

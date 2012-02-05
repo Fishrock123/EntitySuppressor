@@ -1,6 +1,6 @@
 name: EntitySuppressor
 main: Fishrock123.EntitySuppressor.EntitySuppressor
-version: 2.0.3 (1M5)
+version: 2.0.4 (1M8)
 dev-url: http://dev.bukkit.org/server-mods/entitysuppressor/
 description: >
     EntitySuppressor: Take unnecessary stress off your server!

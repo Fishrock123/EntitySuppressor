@@ -18,7 +18,7 @@ public class ESEntityListener extends EntityListener {
 
 	public void onCreatureSpawn(CreatureSpawnEvent e) {
 		World w = e.getLocation().getWorld();
-		ESWorld esw = methods.getESWorld(w);
+		ESWorld esw = methods.getESWorld(w.getName());
 		
 		if (!e.isCancelled() 
 				&& esw != null) {

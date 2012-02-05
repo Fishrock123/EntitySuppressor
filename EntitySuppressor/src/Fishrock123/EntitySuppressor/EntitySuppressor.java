@@ -30,6 +30,7 @@ public class EntitySuppressor extends JavaPlugin {
 	public ESMethods methods;
 	public ESCommands commands;
 
+	@Override
 	public void onEnable() {
 		final long startTime = System.nanoTime();
         final long endTime;
@@ -69,6 +70,7 @@ public class EntitySuppressor extends JavaPlugin {
 		scanner.init();
 	}
 
+	@Override
 	public void onDisable() {  
 		scanner.deinit();
 		l.info("EntitySuppressor Disabled!");
