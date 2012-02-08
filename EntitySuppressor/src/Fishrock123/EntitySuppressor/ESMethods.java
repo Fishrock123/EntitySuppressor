@@ -81,7 +81,7 @@ public class ESMethods {
 		return 0;
 	}
 	
-	public int countAnimals(World w) {
+	public static int countAnimals(World w) {
 		List<LivingEntity> animals = new ArrayList<LivingEntity>();
 		for (LivingEntity a : w.getLivingEntities()) {
 			if (a instanceof Animals) {
@@ -92,7 +92,7 @@ public class ESMethods {
 		return animals.size();
 	}
 	
-	public int countSquid(World w) {
+	public static int countSquid(World w) {
 		List<LivingEntity> squid = new ArrayList<LivingEntity>();
 		for (LivingEntity a : w.getLivingEntities()) {
 			if (a instanceof Squid) {
@@ -103,7 +103,7 @@ public class ESMethods {
 		return squid.size();
 	}
 	
-	public int countMonsters(World w) {
+	public static int countMonsters(World w) {
 		List<LivingEntity> monsters = new ArrayList<LivingEntity>();
 		for (LivingEntity a : w.getLivingEntities()) {
 			if (a instanceof Monster) {

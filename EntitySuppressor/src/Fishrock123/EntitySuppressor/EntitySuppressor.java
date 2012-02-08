@@ -1,5 +1,6 @@
 package Fishrock123.EntitySuppressor;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -10,7 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class EntitySuppressor extends JavaPlugin {
+public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
 	public int i;
 	public Map<String, ESWorld> wlist = new HashMap<String, ESWorld>();
 	public boolean lMonsters;
@@ -54,6 +55,22 @@ public class EntitySuppressor extends JavaPlugin {
 			l.info("You are running a Testing version of EntitySuppressor!");
 			l.info("This version may contain unwanted bugs, ");
 			l.info(" and new features may not be fully functioning.");
+		}
+		
+		try {
+		    Metrics metrics = new Metrics();
+
+		    metrics.addCustomData(this, totalEntities);
+		    metrics.addCustomData(this, totalMobs);
+		    metrics.addCustomData(this, totalMonsters);
+		    metrics.addCustomData(this, totalAnimals);
+		    metrics.addCustomData(this, totalSquid);
+		    metrics.addCustomData(this, totalLoadedChunks);
+
+		    metrics.beginMeasuringPlugin(this);
+		    
+		} catch (IOException e) {
+		    l.info(e.getMessage());
 		}
 	}
 	

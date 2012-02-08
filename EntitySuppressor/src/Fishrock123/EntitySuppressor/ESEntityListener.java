@@ -29,7 +29,7 @@ public class ESEntityListener extends EntityListener {
 					
 				if (e.getEntity() instanceof Monster
 						&& m.lMonsters == true) {
-					if (methods.countMonsters(w) >= methods.getCurrentMax(w, "Monster")) {
+					if (ESMethods.countMonsters(w) >= methods.getCurrentMax(w, "Monster")) {
 						e.setCancelled(true);
 						if (m.uSFlags == true) {
 							w.setSpawnFlags(false, w.getAllowAnimals());
@@ -62,7 +62,7 @@ public class ESEntityListener extends EntityListener {
 				} 
 				if (e.getEntity() instanceof Animals
 						&& m.lAnimals == true
-						&& methods.countAnimals(w) >= methods.getCurrentMax(w, "Animal")) {
+						&& ESMethods.countAnimals(w) >= methods.getCurrentMax(w, "Animal")) {
 					e.setCancelled(true);
 					if (m.uSFlags == true) {
 						w.setSpawnFlags(w.getAllowMonsters(), false);
@@ -73,7 +73,7 @@ public class ESEntityListener extends EntityListener {
 				}
 				if ((e.getCreatureType() == CreatureType.SQUID 
 						&& m.lSquid == true 
-						&& methods.countSquid(w) >= methods.getCurrentMax(w, "Squid"))) {
+						&& ESMethods.countSquid(w) >= methods.getCurrentMax(w, "Squid"))) {
 					e.setCancelled(true);
 				}
 				if (m.d == true 
