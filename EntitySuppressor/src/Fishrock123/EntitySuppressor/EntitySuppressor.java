@@ -93,7 +93,9 @@ public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
 		l.info("EntitySuppressor Disabled!");
 	}
 
+	@Override
 	public boolean onCommand(CommandSender s, Command cmd, String cLabel, String[] args) {
-		return commands.commandProcess(s, cmd, cLabel, args);
+		boolean bol = commands.commandProcess(s, cmd, cLabel, args);
+		return bol;
 	}
 }

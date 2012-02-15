@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Animals;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Squid;
+
+import Fishrock123.AnimalRights.ARDatabase;
 
 public class ESMethods {
 	private EntitySuppressor m;
@@ -119,4 +123,18 @@ public class ESMethods {
         return TimeUnit.MILLISECONDS.convert(time, TimeUnit.NANOSECONDS);
         
     }
+	
+	public boolean isProtected(Entity e) {
+		if (Bukkit.getPluginManager().isPluginEnabled("AnimalRights")) {
+			try {
+				if (ARDatabase.hasProtection(e)) {
+					return true;
+				}
+			} catch (Exception ex) {
+				m.l.info("Error connecting to AnimalRights, assuming all entites are protected.");
+				return true;
+			}
+		}
+		return false;
+	}
 }

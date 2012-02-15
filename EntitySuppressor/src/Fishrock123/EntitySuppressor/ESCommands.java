@@ -145,7 +145,7 @@ public class ESCommands {
 					
 					for (World w : ewl) {
 						for (LivingEntity e : w.getLivingEntities()) {
-							if (!(e instanceof Player)) e.remove();
+							if (!(e instanceof Player) && !methods.isProtected(e) ) e.remove();
 							continue;
 						}
 
@@ -163,7 +163,7 @@ public class ESCommands {
 					
 					for (World w : ewl) {
 						for (LivingEntity e : w.getLivingEntities()) {
-							if (e instanceof Animals) e.remove();
+							if (e instanceof Animals && !methods.isProtected(e)) e.remove();
 							continue;
 						}
 
@@ -181,7 +181,7 @@ public class ESCommands {
 					
 					for (World w : ewl) {
 						for (LivingEntity e : w.getLivingEntities()) {
-							if (e instanceof Monster) e.remove();
+							if (e instanceof Monster && !methods.isProtected(e)) e.remove();
 							continue;
 						}
 
@@ -199,7 +199,7 @@ public class ESCommands {
 					
 					for (World w : ewl) {
 						for (LivingEntity e : w.getLivingEntities()) {
-							if (e instanceof Squid) e.remove();
+							if (e instanceof Squid && !methods.isProtected(e)) e.remove();
 							continue;
 						}
 

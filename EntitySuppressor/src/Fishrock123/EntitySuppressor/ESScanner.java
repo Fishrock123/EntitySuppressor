@@ -53,18 +53,17 @@ public class ESScanner {
 	  				
 	  				if (m.uSFlags == true) {
 	  					
-	  					int mobs = w.getLivingEntities().size() - w.getPlayers().size();
-	  					
 	  					if (m.lMonsters == true) {
+	  						int currentMonsters = ESMethods.countMonsters(w);
 					
-	  						if (mobs >= methods.getCurrentMax(w, "Monster") 
+	  						if (currentMonsters >= methods.getCurrentMax(w, "Monster") 
 	  								&& !w.getAllowMonsters() == false) {
 								w.setSpawnFlags(false, w.getAllowAnimals());
 								if (m.d == true) {
 									m.l.info("ES Debug: Monsters Disabled in " + w.getName());
 								}
 	  						}
-	  						if (mobs < (methods.getCurrentMax(w, "Monster") - (int)Math.ceil(Math.sqrt(methods.getCurrentMax(w, "Monster")))) 
+	  						if (currentMonsters < (methods.getCurrentMax(w, "Monster") - (int)Math.ceil(Math.sqrt(methods.getCurrentMax(w, "Monster")))) 
 	  								&& !w.getAllowMonsters() == true) {
 	  							w.setSpawnFlags(true, w.getAllowAnimals());
 	  							if (m.d == true) {
@@ -73,15 +72,16 @@ public class ESScanner {
 							}
 						}
 	  					if (m.lAnimals == true) {
+	  						int currentMonsters = ESMethods.countMonsters(w);
 					
-	  						if (mobs >= methods.getCurrentMax(w, "Animal") 
+	  						if (currentMonsters >= methods.getCurrentMax(w, "Animal") 
 	  								&& !w.getAllowAnimals() == false) {
 								w.setSpawnFlags(w.getAllowMonsters(), false);
 								if (m.d == true) {
 									m.l.info("ES Debug: Animals Disabled in " + w.getName());
 								}
 	  						}
-	  						if (mobs < (methods.getCurrentMax(w, "Animal") - (int)Math.ceil(Math.sqrt(methods.getCurrentMax(w, "Animal")))) 
+	  						if (currentMonsters < (methods.getCurrentMax(w, "Animal") - (int)Math.ceil(Math.sqrt(methods.getCurrentMax(w, "Animal")))) 
 	  								&& !w.getAllowAnimals() == true) {
 	  							w.setSpawnFlags(w.getAllowMonsters(), true);
 	  							if (m.d == true) {
