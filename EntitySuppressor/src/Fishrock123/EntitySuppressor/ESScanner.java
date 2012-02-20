@@ -23,7 +23,7 @@ public class ESScanner {
 	Runnable r = new Runnable() {
 		public void run() {
 	  		for (World w : m.getServer().getWorlds()) {
-	  			if (m.wlist.containsKey(w.getName())) {
+	  			if (m.eswLookup.containsKey(w.getName())) {
 	  				
 	  				if (m.uRemoveM == true) {
 	  					for (LivingEntity e : w.getLivingEntities()) {
@@ -33,8 +33,8 @@ public class ESScanner {
 								double sdist = 0;
 								double pdist = 0;
 								for (Player p : w.getPlayers()) {
-									pdist = e.getLocation().distance(p.getLocation());
-									if (pdist > m.rdist) {
+									pdist = e.getLocation().distanceSquared(p.getLocation());
+									if (pdist > m.sqRemovalDist) {
 										pdc++;
 										if (sdist == 0 || pdist < sdist) {
 											sdist = pdist;
@@ -44,7 +44,7 @@ public class ESScanner {
 								if (pdc == w.getPlayers().size()) {
 									e.remove();
 									if (m.d == true) {
-										m.l.info("ES Debug: Distance too great (" + (long)sdist + "), removed creature.");
+										m.l.info("ES Debug: Distance too great (" + (long)Math.sqrt(sdist) + "), removed creature.");
 									}
 								}
 							}
@@ -105,7 +105,7 @@ public class ESScanner {
 			}
 			
 			int chunks = 0;
-			for (Entry<String, ESWorld> e : m.wlist.entrySet()) {
+			for (Entry<String, ESWorld> e : m.eswLookup.entrySet()) {
 				if (worldnames.contains(e.getKey())) {
 					chunks = Bukkit.getWorld(e.getKey()).getLoadedChunks().length;
 				}

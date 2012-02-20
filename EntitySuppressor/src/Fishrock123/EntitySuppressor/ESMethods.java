@@ -1,7 +1,5 @@
 package Fishrock123.EntitySuppressor;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.bukkit.Bukkit;
@@ -21,8 +19,8 @@ public class ESMethods {
 	}
 	
 	public ESWorld getESWorld(String s) {
-		if (m.wlist.containsKey(s)) {
-			return m.wlist.get(s);
+		if (m.eswLookup.containsKey(s)) {
+			return m.eswLookup.get(s);
 		} else {
 			return null;
 		}
@@ -42,9 +40,12 @@ public class ESMethods {
 	}
 	
 	public int getCurrentMax(String s, String t) {
-		ESWorld esw = getESWorld(s);
+		return getCurrentMax(getESWorld(s), t);
+	}
+	
+	public int getCurrentMax(ESWorld esw, String t) {
 		
-		if (m.wlist != null
+		if (m.eswLookup != null
 				&& esw != null) {
 			
 			if (t.equals("Monster") 
@@ -76,52 +77,43 @@ public class ESMethods {
 			}
 			if (t.equals("null")) {
 				return ((esw.getpChunkAnimalMaximum() * esw.getLoadedChunks()) / 256) + ((esw.getpChunkSquidMaximum() * esw.getLoadedChunks()) / 256) + ((esw.getpChunkMonsterMaximum() * esw.getLoadedChunks()) / 256);
-			}
-			
-		} else {
-			return 0;	
+			}	
 		}
-		
 		return 0;
 	}
 	
 	public static int countAnimals(World w) {
-		List<LivingEntity> animals = new ArrayList<LivingEntity>();
+		int i = 0;
 		for (LivingEntity a : w.getLivingEntities()) {
 			if (a instanceof Animals) {
-				 animals.add(a);
+				 i++;
 			}
-		}
-			
-		return animals.size();
+		}	
+		return i;
 	}
 	
 	public static int countSquid(World w) {
-		List<LivingEntity> squid = new ArrayList<LivingEntity>();
+		int i = 0;
 		for (LivingEntity a : w.getLivingEntities()) {
 			if (a instanceof Squid) {
-				 squid.add(a);
+				 i++;
 			}
-		}
-			
-		return squid.size();
+		}		
+		return i;
 	}
 	
 	public static int countMonsters(World w) {
-		List<LivingEntity> monsters = new ArrayList<LivingEntity>();
+		int i = 0;
 		for (LivingEntity a : w.getLivingEntities()) {
 			if (a instanceof Monster) {
-				 monsters.add(a);
+				 i++;
 			}
-		}
-			
-		return monsters.size();
+		}	
+		return i;
 	}
 	
 	public long convTime(long time) {
-		
-        return TimeUnit.MILLISECONDS.convert(time, TimeUnit.NANOSECONDS);
-        
+        return TimeUnit.MILLISECONDS.convert(time, TimeUnit.NANOSECONDS);  
     }
 	
 	public boolean isProtected(Entity e) {

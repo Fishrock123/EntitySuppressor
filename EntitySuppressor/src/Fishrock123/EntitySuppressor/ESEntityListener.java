@@ -5,10 +5,12 @@ import org.bukkit.entity.Animals;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityListener;
 
-public class ESEntityListener extends EntityListener {
+public class ESEntityListener implements Listener {
 	private EntitySuppressor m;
 	private ESMethods methods;
 	public ESEntityListener(EntitySuppressor instance) {
@@ -16,6 +18,7 @@ public class ESEntityListener extends EntityListener {
 		methods = m.methods;
 	}
 
+	@EventHandler (priority = EventPriority.HIGH)
 	public void onCreatureSpawn(CreatureSpawnEvent e) {
 		World w = e.getLocation().getWorld();
 		ESWorld esw = methods.getESWorld(w.getName());
@@ -44,8 +47,8 @@ public class ESEntityListener extends EntityListener {
 						double sdist = 0;
 						double pdist = 0;
 						for (Player p : w.getPlayers()) {
-							pdist = e.getLocation().distance(p.getLocation());
-							if (pdist > m.cdist) {
+							pdist = e.getLocation().distanceSquared(p.getLocation());
+							if (pdist > m.sqCancelDist) {
 								pdc++;
 								if (sdist == 0 || pdist < sdist) {
 									sdist = pdist;
@@ -55,7 +58,7 @@ public class ESEntityListener extends EntityListener {
 						if (pdc == w.getPlayers().size()) {
 							e.setCancelled(true);
 							if (m.d == true) {
-								m.l.info("ES Debug: Distance too great (" + (long)sdist + "), cancelled spawn.");
+								m.l.info("ES Debug: Distance too great (" + (long)Math.sqrt(sdist) + "), cancelled spawn.");
 							}
 						}
 					}

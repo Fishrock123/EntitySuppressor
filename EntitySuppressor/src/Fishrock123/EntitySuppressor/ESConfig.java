@@ -68,35 +68,12 @@ public class ESConfig {
 	
 	public void odCheck() {
 		final FileConfiguration c = m.getConfig();
-		if (c.contains("maxMonsters") 
-  				|| c.contains("ESConfigVersion; DO NOT CHANGE!")
-  				|| c.contains("nonLimitedWorlds")
-  				|| c.contains("SpawnFlagsCheckInterval")
-  				|| c.contains("checkDifference")
-  				|| c.contains("DefaultMaximum")
-  				|| c.contains("limitSquid")) {
+		if (c.contains("PLACEHOLDER")) {
   			m.l.info("ES ALERT: Outdated Config! Please refer to");
 			m.l.info("http://dev.bukkit.org/server-mods/entitysuppressor/pages/main/configuration/");
 			m.l.info("or re-generate your config for...");
 			m.l.info("...information about updating your config.");
   		}
-		if (!c.contains("MonsterMaximums")) {
-			c.addDefault("LimitMonsters", true);
-			c.addDefault("LimitSquid", true);
-			c.addDefault("LimitAnimals", false);
-   	 		c.createSection("MonsterMaximums").addDefault("world", 256);
-   	 		c.getConfigurationSection("MonsterMaximums").addDefault("world_nether", 128);
-   	 		c.getConfigurationSection("MonsterMaximums").addDefault("world_the_end", 256);
-   	 		c.createSection("ChunkCalculatedMonsterMaximums").addDefault("world", 23);
-	 		c.getConfigurationSection("ChunkCalculatedMonsterMaximums").addDefault("world_nether", 23);
-	 		c.createSection("SquidMaximums").addDefault("world", 32);
-   	 		c.createSection("ChunkCalculatedSquidMaximums").addDefault("world", 6);
-	 		c.createSection("AnimalMaximums").addDefault("world", 128);
-   	 		c.createSection("ChunkCalculatedAnimalMaximums").addDefault("world", 23);
-   	 		c.addDefault("UseMonsterDistanceRemoval", true);
-   	 		c.addDefault("RemoveAtDistance", 128);
-   	 		c.addDefault("CancelSpawnAtDistance", 92);
-		}
 	}
 	
 	public void load() {
@@ -113,78 +90,78 @@ public class ESConfig {
   		}
   		if (c.contains("MonsterMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("MonsterMaximums").getValues(true).entrySet()) {
-  				if (!m.wlist.containsKey(entry.getKey())) {
-  					m.wlist.put(entry.getKey(), new ESWorld(entry.getKey()));
+  				if (!m.eswLookup.containsKey(entry.getKey())) {
+  					m.eswLookup.put(entry.getKey(), new ESWorld(entry.getKey()));
   				}
-  				ESWorld esw =  m.wlist.get(entry.getKey());
+  				ESWorld esw =  m.eswLookup.get(entry.getKey());
   				esw.setMonsterMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("SquidMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("SquidMaximums").getValues(true).entrySet()) {
-  				if (!m.wlist.containsKey(entry.getKey())) {
-  					m.wlist.put(entry.getKey(), new ESWorld(entry.getKey()));
+  				if (!m.eswLookup.containsKey(entry.getKey())) {
+  					m.eswLookup.put(entry.getKey(), new ESWorld(entry.getKey()));
   				}
-  				ESWorld esw =  m.wlist.get(entry.getKey());
+  				ESWorld esw =  m.eswLookup.get(entry.getKey());
   				esw.setSquidMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("AnimalMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("AnimalMaximums").getValues(true).entrySet()) {
-  				if (!m.wlist.containsKey(entry.getKey())) {
-  					m.wlist.put(entry.getKey(), new ESWorld(entry.getKey()));
+  				if (!m.eswLookup.containsKey(entry.getKey())) {
+  					m.eswLookup.put(entry.getKey(), new ESWorld(entry.getKey()));
   				}
-  				ESWorld esw =  m.wlist.get(entry.getKey());
+  				ESWorld esw =  m.eswLookup.get(entry.getKey());
   				esw.setAnimalMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("ChunkCalculatedMonsterMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("ChunkCalculatedMonsterMaximums").getValues(true).entrySet()) {
-  				if (!m.wlist.containsKey(entry.getKey())) {
-  					m.wlist.put(entry.getKey(), new ESWorld(entry.getKey()));
+  				if (!m.eswLookup.containsKey(entry.getKey())) {
+  					m.eswLookup.put(entry.getKey(), new ESWorld(entry.getKey()));
   				}
-  				ESWorld esw =  m.wlist.get(entry.getKey());
+  				ESWorld esw =  m.eswLookup.get(entry.getKey());
   				esw.setpChunkMonsterMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("ChunkCalculatedSquidMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("ChunkCalculatedSquidMaximums").getValues(true).entrySet()) {
-  				if (!m.wlist.containsKey(entry.getKey())) {
-  					m.wlist.put(entry.getKey(), new ESWorld(entry.getKey()));
+  				if (!m.eswLookup.containsKey(entry.getKey())) {
+  					m.eswLookup.put(entry.getKey(), new ESWorld(entry.getKey()));
   				}
-  				ESWorld esw =  m.wlist.get(entry.getKey());
+  				ESWorld esw =  m.eswLookup.get(entry.getKey());
   				esw.setpChunkSquidMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("ChunkCalculatedAnimalMaximums")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("ChunkCalculatedAnimalMaximums").getValues(true).entrySet()) {
-  				if (!m.wlist.containsKey(entry.getKey())) {
-  					m.wlist.put(entry.getKey(), new ESWorld(entry.getKey()));
+  				if (!m.eswLookup.containsKey(entry.getKey())) {
+  					m.eswLookup.put(entry.getKey(), new ESWorld(entry.getKey()));
   				}
-  				ESWorld esw =  m.wlist.get(entry.getKey());
+  				ESWorld esw =  m.eswLookup.get(entry.getKey());
   				esw.setpChunkAnimalMaximum(Integer.parseInt(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
   		if (c.contains("LimitSpawners")) {
   			for (Entry<String, Object> entry : c.getConfigurationSection("LimitSpawners").getValues(true).entrySet()) {
-  				if (!m.wlist.containsKey(entry.getKey())) {
-  					m.wlist.put(entry.getKey(), new ESWorld(entry.getKey()));
+  				if (!m.eswLookup.containsKey(entry.getKey())) {
+  					m.eswLookup.put(entry.getKey(), new ESWorld(entry.getKey()));
   				}
-  				ESWorld esw =  m.wlist.get(entry.getKey());
+  				ESWorld esw =  m.eswLookup.get(entry.getKey());
   				esw.setlSpawners(Boolean.parseBoolean(entry.getValue().toString().trim()));
   				continue;
   			}
   		}
 		m.uSFlags = c.getBoolean("UseSpawnFlags", true);
 		m.uRemoveM = c.getBoolean("UseMonsterDistanceRemoval", true);
-		m.rdist = c.getInt("RemoveAtDistance", 128);
-		m.cdist = c.getInt("CancelSpawnAtDistance", 92);
+		m.sqRemovalDist = (int)Math.pow(c.getInt("RemoveAtDistance", 128), 2);
+		m.sqCancelDist = (int)Math.pow(c.getInt("CancelSpawnAtDistance", 92), 2);
 		m.d = c.getBoolean("Debug", false);
 		if (m.d == true) m.l.info("ES NOTICE: Running in debug mode!");
   	}

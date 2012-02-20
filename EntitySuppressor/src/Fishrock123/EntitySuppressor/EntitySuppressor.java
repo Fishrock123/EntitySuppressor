@@ -8,12 +8,11 @@ import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.event.Event;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
 	public int i;
-	public Map<String, ESWorld> wlist = new HashMap<String, ESWorld>();
+	public Map<String, ESWorld> eswLookup = new HashMap<String, ESWorld>();
 	public boolean lMonsters;
 	public boolean lSquid;
 	public boolean lAnimals;
@@ -21,8 +20,8 @@ public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
 	public boolean lSpawners;
 	public boolean uSFlags;
 	public boolean uRemoveM;
-	public int rdist;
-	public int cdist;
+	public int sqRemovalDist;
+	public int sqCancelDist;
 
 	public Logger l;
 	public ESConfig config;
@@ -36,7 +35,7 @@ public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
 		final long startTime = System.nanoTime();
         final long endTime;
         
-        l = Logger.getLogger("Minecraft");
+        l = getLogger();
         
         methods = new ESMethods(this);
         config = new ESConfig(this);
@@ -47,9 +46,9 @@ public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
         
         commands = new ESCommands(this);
         
-  		getServer().getPluginManager().registerEvent(Event.Type.CREATURE_SPAWN, eListener, Event.Priority.Normal, this);
+  		getServer().getPluginManager().registerEvents(eListener, this);
 		endTime = System.nanoTime();
-		l.info("EntitySuppressor version " + getDescription().getVersion() + " is enabled! {" + methods.convTime(endTime - startTime) + " ms}");
+		l.info("is enabled! {" + methods.convTime(endTime - startTime) + " ms}");
 		if (getDescription().getVersion().contains("TEST")) {
 			l.info("ES Disclaimer: ");
 			l.info("You are running a Testing version of EntitySuppressor!");
@@ -78,10 +77,13 @@ public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
 		config.generate();
 		config.load();
 		
-  		for (Entry<String, ESWorld> e : wlist.entrySet()) {
-  			l.info("ES: Maximum monsters in `" + e.getKey() + "` is currently: " + methods.getCurrentMax(e.getKey(), "Monster"));
-  			l.info("ES: Maximum squid in `" + e.getKey() + "` is currently: " + methods.getCurrentMax(e.getKey(), "Squid"));
-  			l.info("ES: Maximum animals in `" + e.getKey() + "` is currently: " + methods.getCurrentMax(e.getKey(), "Animal"));
+  		for (Entry<String, ESWorld> e : eswLookup.entrySet()) {
+  			ESWorld esw = e.getValue();
+  			l.info("Current Maximums for `" + e.getKey() + "`:" 
+  			+ (esw.hasMonsterMaximum() ? " Monsters(" + methods.getCurrentMax(esw, "Monster") + ")" : "") 
+  			+ (esw.hasAnimalMaximum() ? " Animals(" + methods.getCurrentMax(esw, "Animal") + ")"  : "") 
+  			+ (esw.hasSquidMaximum() ? " Squid(" + methods.getCurrentMax(esw, "Squid") + ")"   : "")
+  			);
   		}
 		
 		scanner.init();
@@ -90,7 +92,6 @@ public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
 	@Override
 	public void onDisable() {  
 		scanner.deinit();
-		l.info("EntitySuppressor Disabled!");
 	}
 
 	@Override
