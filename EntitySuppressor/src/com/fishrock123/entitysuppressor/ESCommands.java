@@ -63,14 +63,6 @@ public class ESCommands {
 			//Count
 			if (args[0].equalsIgnoreCase("count")) {
 				
-				if ((s instanceof Player)
-						&& !s.getName().equals("Fishrock123")
-						&& !((Player)s).hasPermission("esuppressor.count")) {
-        	  
-					s.sendMessage(ChatColor.DARK_RED + "Oh Noes! You don't have Permission to use that!");
-					return true;
-				}
-				
 				List<World> ewl = new ArrayList<World>();
 				if (args.length == 2 && args[1].equalsIgnoreCase("all")) ewl.addAll(m.getServer().getWorlds());
 				else if (args.length == 2 && m.getServer().getWorlds().contains(Bukkit.getWorld(args[1]))) ewl.add(m.getServer().getWorld(args[1]));

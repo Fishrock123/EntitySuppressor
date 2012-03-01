@@ -1,6 +1,6 @@
 name: EntitySuppressor
 main: com.fishrock123.entitysuppressor.EntitySuppressor
-version: 2.2 (1O4)
+version: 2.2 (1O5)
 author: Fishrock123
 website: http://dev.bukkit.org/server-mods/entitysuppressor/
 dev-url: http://dev.bukkit.org/server-mods/entitysuppressor/
@@ -23,16 +23,10 @@ permissions:
     description: Gives access to all DecoyBlocks commands
     children:
       esuppressor.reload: true
-      esuppressor.count: true
       esuppressor.remove: true
-  esuppressor.count:
-    description: Allows you to count currently loaded entities.
-    default: op
   esuppressor.remove:
     description: Allows you to remove loaded entities.
     default: op
-    children:
-      esuppressor.count: true
   esuppressor.reload:
     description: Allows you to reload EntitySuppressor.
     default: op

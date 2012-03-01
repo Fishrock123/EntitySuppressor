@@ -10,7 +10,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Squid;
 
-import Fishrock123.AnimalRights.ARDatabase;
+import com.fishrock123.animalrights.ARDatabase;
 
 public class ESMethods {
 	private EntitySuppressor m;
