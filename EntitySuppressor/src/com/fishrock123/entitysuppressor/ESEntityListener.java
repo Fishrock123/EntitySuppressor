@@ -1,14 +1,16 @@
-package Fishrock123.EntitySuppressor;
+package com.fishrock123.entitysuppressor;
 
 import org.bukkit.World;
 import org.bukkit.entity.Animals;
-import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Squid;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+
+import com.fishrock123.math.RootMath;
 
 public class ESEntityListener implements Listener {
 	private EntitySuppressor m;
@@ -32,7 +34,7 @@ public class ESEntityListener implements Listener {
 					
 				if (e.getEntity() instanceof Monster
 						&& m.lMonsters == true) {
-					if (ESMethods.countMonsters(w) >= methods.getCurrentMax(w, "Monster")) {
+					if (ESMethods.countMonsters(w) >= methods.getCurrentMax(w, Monster.class)) {
 						e.setCancelled(true);
 						if (m.uSFlags == true) {
 							w.setSpawnFlags(false, w.getAllowAnimals());
@@ -41,12 +43,13 @@ public class ESEntityListener implements Listener {
 							}
 						}
 					}
-					if (m.uRemoveM == true
-							&& w.getPlayers().size() >= 1) {
+					if (m.uRemoveM == true) {
+						int i = 0;
 						int pdc = 0;
 						double sdist = 0;
 						double pdist = 0;
 						for (Player p : w.getPlayers()) {
+							i++;
 							pdist = e.getLocation().distanceSquared(p.getLocation());
 							if (pdist > m.sqCancelDist) {
 								pdc++;
@@ -55,17 +58,17 @@ public class ESEntityListener implements Listener {
 								}
 							}
 						}
-						if (pdc == w.getPlayers().size()) {
+						if (pdc == i) {
 							e.setCancelled(true);
 							if (m.d == true) {
-								m.l.info("ES Debug: Distance too great (" + (long)Math.sqrt(sdist) + "), cancelled spawn.");
+								m.l.info("ES Debug: Distance too great (" + (int)RootMath.sqrt((float)sdist) + "), cancelled spawn.");
 							}
 						}
 					}
 				} 
 				if (e.getEntity() instanceof Animals
 						&& m.lAnimals == true
-						&& ESMethods.countAnimals(w) >= methods.getCurrentMax(w, "Animal")) {
+						&& ESMethods.countAnimals(w) >= methods.getCurrentMax(w, Animals.class)) {
 					e.setCancelled(true);
 					if (m.uSFlags == true) {
 						w.setSpawnFlags(w.getAllowMonsters(), false);
@@ -74,15 +77,15 @@ public class ESEntityListener implements Listener {
 						}
 					}
 				}
-				if ((e.getCreatureType() == CreatureType.SQUID 
+				if ((e.getEntity() instanceof Squid
 						&& m.lSquid == true 
-						&& ESMethods.countSquid(w) >= methods.getCurrentMax(w, "Squid"))) {
+						&& ESMethods.countSquid(w) >= methods.getCurrentMax(w, Squid.class))) {
 					e.setCancelled(true);
 				}
 				if (m.d == true 
 						&& !e.isCancelled()
 						&& (e.getEntity() instanceof Animals)) {
-					m.l.info("ES Debug: Spawned " + e.getCreatureType().getName() + " in " + w.getName());
+					m.l.info("ES Debug: Spawned " + e.getEntityType().name() + " in " + w.getName());
 				}
 			}
 		}

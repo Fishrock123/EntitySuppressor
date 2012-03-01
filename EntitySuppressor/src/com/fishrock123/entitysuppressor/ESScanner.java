@@ -1,18 +1,20 @@
-package Fishrock123.EntitySuppressor;
+package com.fishrock123.entitysuppressor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
+
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.entity.Animals;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 
+import com.fishrock123.math.RootMath;
+
 public class ESScanner {
-	private int Scan;
-	private int Update;
 	private EntitySuppressor m;
 	private ESMethods methods;
 	public ESScanner(EntitySuppressor instance) {
@@ -27,12 +29,14 @@ public class ESScanner {
 	  				
 	  				if (m.uRemoveM == true) {
 	  					for (LivingEntity e : w.getLivingEntities()) {
-							if (e instanceof Monster 
-									&& w.getPlayers().size() >= 1) {
+							if (e instanceof Monster
+									&& w.getPlayers().size() > 0) {
+								int i = 0;
 								int pdc = 0;
 								double sdist = 0;
 								double pdist = 0;
 								for (Player p : w.getPlayers()) {
+									i++;
 									pdist = e.getLocation().distanceSquared(p.getLocation());
 									if (pdist > m.sqRemovalDist) {
 										pdc++;
@@ -41,10 +45,10 @@ public class ESScanner {
 										}
 									}
 								}
-								if (pdc == w.getPlayers().size()) {
+								if (pdc == i) {
 									e.remove();
 									if (m.d == true) {
-										m.l.info("ES Debug: Distance too great (" + (long)Math.sqrt(sdist) + "), removed creature.");
+										m.l.info("ES Debug: Distance too great (" + (int)RootMath.sqrt((float)sdist) + "), removed creature.");
 									}
 								}
 							}
@@ -52,45 +56,43 @@ public class ESScanner {
 	  				}
 	  				
 	  				if (m.uSFlags == true) {
+	  					int currentMax = 0;
 	  					
 	  					if (m.lMonsters == true) {
 	  						int currentMonsters = ESMethods.countMonsters(w);
+	  						currentMax = methods.getCurrentMax(w, Monster.class);
 					
-	  						if (currentMonsters >= methods.getCurrentMax(w, "Monster") 
-	  								&& !w.getAllowMonsters() == false) {
-								w.setSpawnFlags(false, w.getAllowAnimals());
-								if (m.d == true) {
-									m.l.info("ES Debug: Monsters Disabled in " + w.getName());
-								}
-	  						}
-	  						if (currentMonsters < (methods.getCurrentMax(w, "Monster") - (int)Math.ceil(Math.sqrt(methods.getCurrentMax(w, "Monster")))) 
-	  								&& !w.getAllowMonsters() == true) {
+	  						if (w.getAllowMonsters() != true && currentMonsters < currentMax - (int)RootMath.sqrtApprox(currentMax)) {
 	  							w.setSpawnFlags(true, w.getAllowAnimals());
 	  							if (m.d == true) {
 	  								m.l.info("ES Debug: Monsters Enabled in " + w.getName());
 	  							}
 							}
-						}
-	  					if (m.lAnimals == true) {
-	  						int currentMonsters = ESMethods.countMonsters(w);
-					
-	  						if (currentMonsters >= methods.getCurrentMax(w, "Animal") 
-	  								&& !w.getAllowAnimals() == false) {
-								w.setSpawnFlags(w.getAllowMonsters(), false);
+	  						else if (w.getAllowMonsters() != false && currentMonsters >= currentMax) {
+								w.setSpawnFlags(false, w.getAllowAnimals());
 								if (m.d == true) {
-									m.l.info("ES Debug: Animals Disabled in " + w.getName());
+									m.l.info("ES Debug: Monsters Disabled in " + w.getName());
 								}
 	  						}
-	  						if (currentMonsters < (methods.getCurrentMax(w, "Animal") - (int)Math.ceil(Math.sqrt(methods.getCurrentMax(w, "Animal")))) 
-	  								&& !w.getAllowAnimals() == true) {
+						}
+	  					if (m.lAnimals == true) {
+	  						int currentAnimals = ESMethods.countAnimals(w);
+	  						currentMax = methods.getCurrentMax(w, Animals.class);
+					
+	  						if (w.getAllowAnimals() != true && currentAnimals < currentMax - (int)RootMath.sqrtApprox(currentMax)) {
 	  							w.setSpawnFlags(w.getAllowMonsters(), true);
 	  							if (m.d == true) {
 	  								m.l.info("ES Debug: Animals Enabled in " + w.getName());
 	  							}
 							}
+	  						else if (w.getAllowAnimals() != false && currentAnimals >= currentMax) {
+								w.setSpawnFlags(w.getAllowMonsters(), false);
+								if (m.d == true) {
+									m.l.info("ES Debug: Animals Disabled in " + w.getName());
+								}
+	  						}
 						}
 	  				}
-	  			//Else: Take a snooze.
 	  			}
 	  		}
 		}
@@ -104,25 +106,22 @@ public class ESScanner {
 				worldnames.add(w.getName());
 			}
 			
-			int chunks = 0;
 			for (Entry<String, ESWorld> e : m.eswLookup.entrySet()) {
 				if (worldnames.contains(e.getKey())) {
-					chunks = Bukkit.getWorld(e.getKey()).getLoadedChunks().length;
+					e.getValue().update(Bukkit.getWorld(e.getKey()).getLoadedChunks().length);
 				}
-				e.getValue().update(chunks);
 			}
 		}
 	};
 	
 	public void init() {
-		Scan = m.getServer().getScheduler().scheduleSyncRepeatingTask(m, r, m.i, m.i);
+		m.getServer().getScheduler().scheduleSyncRepeatingTask(m, r, m.i, m.i);
 		r.run();
-		Update = m.getServer().getScheduler().scheduleSyncRepeatingTask(m, u, 20, 20);
+		m.getServer().getScheduler().scheduleSyncRepeatingTask(m, u, 200, 200);
 		u.run();
 	}
 
 	public void deinit() {
-		m.getServer().getScheduler().cancelTask(Scan);
-		m.getServer().getScheduler().cancelTask(Update);
+		m.getServer().getScheduler().cancelTasks(m);
   	}
 }

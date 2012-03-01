@@ -1,4 +1,4 @@
-package Fishrock123.EntitySuppressor;
+package com.fishrock123.entitysuppressor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,22 +60,6 @@ public class ESCommands {
 				
 				return true;
 			}
-			//Print -- This is for debug only.
-			if (args[0].equalsIgnoreCase("print")
-					&& m.d == true) {
-				if (s instanceof Player 
-						&& !((Player)s).hasPermission("esuppressor.print")) {
-        	  
-					s.sendMessage(ChatColor.DARK_RED + "Oh Noes! You don't have Permission to use that!");
-					return true;
-				}
-				for (World w : m.getServer().getWorlds()) {
-					m.l.info("Printing all living entities in " + w);
-					m.l.info(w.getLivingEntities().toString());
-					continue;
-				}
-				return true;
-			}
 			//Count
 			if (args[0].equalsIgnoreCase("count")) {
 				
@@ -116,9 +100,9 @@ public class ESCommands {
 					}
 					
 					s.sendMessage("ES: " + w.getLoadedChunks().length + " chunks loaded in `" + w.getName() + "` (CCM: " + ((double)w.getLoadedChunks().length / 256D) + ")");
-					s.sendMessage("ES: Maximum monsters in `" + w.getName() + "` is: " + methods.getCurrentMax(w, "Monster"));
-					s.sendMessage("ES: Maximum squid in `" + w.getName() + "` is: " + methods.getCurrentMax(w, "Squid"));
-					s.sendMessage("ES: Maximum animals in `" + w.getName() + "` is: " + methods.getCurrentMax(w, "Animal"));
+					s.sendMessage("ES: Maximum monsters in `" + w.getName() + "` is: " + methods.getCurrentMax(w, Monster.class));
+					s.sendMessage("ES: Maximum squid in `" + w.getName() + "` is: " + methods.getCurrentMax(w, Squid.class));
+					s.sendMessage("ES: Maximum animals in `" + w.getName() + "` is: " + methods.getCurrentMax(w, Animals.class));
 					s.sendMessage("ES Count: (" + (ms + as + ss + ps) + "): " + ms + " monsters, " + as + " animals, " + ss + " squid, and " + ps + " players in `" + w.getName() + "`");
 					continue;
 				}

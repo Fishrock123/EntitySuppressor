@@ -1,4 +1,4 @@
-package Fishrock123.EntitySuppressor;
+package com.fishrock123.entitysuppressor;
 
 /*
  * Copyright 2011 Tyler Blair. All rights reserved.

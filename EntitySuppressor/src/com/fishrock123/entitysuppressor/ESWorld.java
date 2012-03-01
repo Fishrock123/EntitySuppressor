@@ -1,4 +1,4 @@
-package Fishrock123.EntitySuppressor;
+package com.fishrock123.entitysuppressor;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;

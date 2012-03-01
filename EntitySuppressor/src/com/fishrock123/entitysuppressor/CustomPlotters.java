@@ -1,4 +1,4 @@
-package Fishrock123.EntitySuppressor;
+package com.fishrock123.entitysuppressor;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -60,7 +60,6 @@ public interface CustomPlotters {
     };
     
     Metrics.Plotter totalLoadedChunks = new Metrics.Plotter("Loaded Chunks") {
-
         @Override
         public int getValue() {
         	int count = 0;

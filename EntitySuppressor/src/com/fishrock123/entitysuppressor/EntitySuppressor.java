@@ -1,4 +1,4 @@
-package Fishrock123.EntitySuppressor;
+package com.fishrock123.entitysuppressor;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -8,6 +8,9 @@ import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Animals;
+import org.bukkit.entity.Monster;
+import org.bukkit.entity.Squid;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
@@ -47,14 +50,6 @@ public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
         commands = new ESCommands(this);
         
   		getServer().getPluginManager().registerEvents(eListener, this);
-		endTime = System.nanoTime();
-		l.info("is enabled! {" + methods.convTime(endTime - startTime) + " ms}");
-		if (getDescription().getVersion().contains("TEST")) {
-			l.info("ES Disclaimer: ");
-			l.info("You are running a Testing version of EntitySuppressor!");
-			l.info("This version may contain unwanted bugs, ");
-			l.info(" and new features may not be fully functioning.");
-		}
 		
 		try {
 		    Metrics metrics = new Metrics();
@@ -71,6 +66,15 @@ public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
 		} catch (IOException e) {
 		    l.info(e.getMessage());
 		}
+		
+		endTime = System.nanoTime();
+		l.info("is enabled! {" + methods.convTime(endTime - startTime) + " ms}");
+		if (getDescription().getVersion().contains("TEST")) {
+			l.info("ES Disclaimer: ");
+			l.info("You are running a Testing version of EntitySuppressor!");
+			l.info("This version may contain unwanted bugs, ");
+			l.info(" and new features may not be fully functioning.");
+		}
 	}
 	
 	public void initialize() {
@@ -80,9 +84,9 @@ public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
   		for (Entry<String, ESWorld> e : eswLookup.entrySet()) {
   			ESWorld esw = e.getValue();
   			l.info("Current Maximums for `" + e.getKey() + "`:" 
-  			+ (esw.hasMonsterMaximum() ? " Monsters(" + methods.getCurrentMax(esw, "Monster") + ")" : "") 
-  			+ (esw.hasAnimalMaximum() ? " Animals(" + methods.getCurrentMax(esw, "Animal") + ")"  : "") 
-  			+ (esw.hasSquidMaximum() ? " Squid(" + methods.getCurrentMax(esw, "Squid") + ")"   : "")
+  			+ (esw.hasMonsterMaximum() ? " Monsters(" + methods.getCurrentMax(esw, Monster.class) + ")" : "") 
+  			+ (esw.hasAnimalMaximum() ? " Animals(" + methods.getCurrentMax(esw, Animals.class) + ")"  : "") 
+  			+ (esw.hasSquidMaximum() ? " Squid(" + methods.getCurrentMax(esw, Squid.class) + ")"   : "")
   			);
   		}
 		
