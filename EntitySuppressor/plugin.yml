@@ -1,6 +1,6 @@
 name: EntitySuppressor
 main: com.fishrock123.entitysuppressor.EntitySuppressor
-version: 2.2 (1O5)
+version: 2.2.1 (1O7)
 author: Fishrock123
 website: http://dev.bukkit.org/server-mods/entitysuppressor/
 dev-url: http://dev.bukkit.org/server-mods/entitysuppressor/
@@ -13,7 +13,6 @@ softdepend:
 - AnimalRights
 commands:
     es:
-        description: ''
         usage: 
             /es count <world / all>
             

@@ -12,7 +12,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 
-import com.fishrock123.math.RootMath;
+import com.fishrock123.entitysuppressor.utils.math.RootMath;
 
 public class ESScanner {
 	private EntitySuppressor m;
@@ -48,7 +48,7 @@ public class ESScanner {
 								if (pdc == i) {
 									e.remove();
 									if (m.d == true) {
-										m.l.info("ES Debug: Distance too great (" + (int)RootMath.sqrt((float)sdist) + "), removed creature.");
+										m.l.info("Debug: Distance too great (" + (int)RootMath.sqrt((float)sdist) + "), removed creature.");
 									}
 								}
 							}
@@ -65,13 +65,13 @@ public class ESScanner {
 	  						if (w.getAllowMonsters() != true && currentMonsters < currentMax - (int)RootMath.sqrtApprox(currentMax)) {
 	  							w.setSpawnFlags(true, w.getAllowAnimals());
 	  							if (m.d == true) {
-	  								m.l.info("ES Debug: Monsters Enabled in " + w.getName());
+	  								m.l.info("Debug: Monsters Enabled in `" + w.getName() + '`');
 	  							}
 							}
 	  						else if (w.getAllowMonsters() != false && currentMonsters >= currentMax) {
 								w.setSpawnFlags(false, w.getAllowAnimals());
 								if (m.d == true) {
-									m.l.info("ES Debug: Monsters Disabled in " + w.getName());
+									m.l.info("Debug: Monsters Disabled in `" + w.getName() + '`');
 								}
 	  						}
 						}
@@ -82,13 +82,13 @@ public class ESScanner {
 	  						if (w.getAllowAnimals() != true && currentAnimals < currentMax - (int)RootMath.sqrtApprox(currentMax)) {
 	  							w.setSpawnFlags(w.getAllowMonsters(), true);
 	  							if (m.d == true) {
-	  								m.l.info("ES Debug: Animals Enabled in " + w.getName());
+	  								m.l.info("Debug: Animals Enabled in `" + w.getName() + '`');
 	  							}
 							}
 	  						else if (w.getAllowAnimals() != false && currentAnimals >= currentMax) {
 								w.setSpawnFlags(w.getAllowMonsters(), false);
 								if (m.d == true) {
-									m.l.info("ES Debug: Animals Disabled in " + w.getName());
+									m.l.info("Debug: Animals Disabled in `" + w.getName() + '`');
 								}
 	  						}
 						}

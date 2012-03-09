@@ -91,11 +91,11 @@ public class ESCommands {
 						continue;
 					}
 					
-					s.sendMessage("ES: " + w.getLoadedChunks().length + " chunks loaded in `" + w.getName() + "` (CCM: " + ((double)w.getLoadedChunks().length / 256D) + ")");
+					s.sendMessage("ES: " + w.getLoadedChunks().length + " chunks loaded in `" + w.getName() + "` (CCM: " + ((double)w.getLoadedChunks().length / 256D) + ')');
 					s.sendMessage("ES: Maximum monsters in `" + w.getName() + "` is: " + methods.getCurrentMax(w, Monster.class));
 					s.sendMessage("ES: Maximum squid in `" + w.getName() + "` is: " + methods.getCurrentMax(w, Squid.class));
 					s.sendMessage("ES: Maximum animals in `" + w.getName() + "` is: " + methods.getCurrentMax(w, Animals.class));
-					s.sendMessage("ES Count: (" + (ms + as + ss + ps) + "): " + ms + " monsters, " + as + " animals, " + ss + " squid, and " + ps + " players in `" + w.getName() + "`");
+					s.sendMessage("ES Count: (" + (ms + as + ss + ps) + "): " + ms + " monsters, " + as + " animals, " + ss + " squid, and " + ps + " players in `" + w.getName() + '`');
 					continue;
 				}
 				return true;
@@ -125,9 +125,9 @@ public class ESCommands {
 							continue;
 						}
 
-						s.sendMessage("Removed all mobs in `" + w.getName() + "`");
+						s.sendMessage("Removed all mobs in `" + w.getName() + '`');
 						if (!(s instanceof ConsoleCommandSender)) {
-							m.l.info("Removed all mobs in `" + w.getName() + "`");
+							m.l.info("Removed all mobs in `" + w.getName() + '`');
 						}
 						continue;
 					}
@@ -143,9 +143,9 @@ public class ESCommands {
 							continue;
 						}
 
-						s.sendMessage("Removed all animals in `" + w.getName() + "`");
+						s.sendMessage("Removed all animals in `" + w.getName() + '`');
 						if (!(s instanceof ConsoleCommandSender)) {
-							m.l.info("Removed all animals in `" + w.getName() + "`");
+							m.l.info("Removed all animals in `" + w.getName() + '`');
 						}
 						continue;
 					}
@@ -161,9 +161,9 @@ public class ESCommands {
 							continue;
 						}
 
-						s.sendMessage("Removed all monsters in `" + w.getName() + "`");
+						s.sendMessage("Removed all monsters in `" + w.getName() + '`');
 						if (!(s instanceof ConsoleCommandSender)) {
-							m.l.info("Removed all monsters in `" + w.getName() + "`");
+							m.l.info("Removed all monsters in `" + w.getName() + '`');
 						}
 						continue;
 					}
@@ -179,9 +179,9 @@ public class ESCommands {
 							continue;
 						}
 
-						s.sendMessage("Removed all squid in `" + w.getName() + "`");
+						s.sendMessage("Removed all squid in `" + w.getName() + '`');
 						if (!(s instanceof ConsoleCommandSender)) {
-							m.l.info("Removed all squid in `" + w.getName() + "`");
+							m.l.info("Removed all squid in `" + w.getName() + '`');
 						}
 						continue;
 					}

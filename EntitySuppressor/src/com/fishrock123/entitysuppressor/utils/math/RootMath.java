@@ -1,4 +1,4 @@
-package com.fishrock123.math;
+package com.fishrock123.entitysuppressor.utils.math;
 
 /**
  * @author Fishrock123

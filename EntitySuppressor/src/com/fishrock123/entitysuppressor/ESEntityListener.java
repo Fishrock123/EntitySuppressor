@@ -10,7 +10,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
-import com.fishrock123.math.RootMath;
+import com.fishrock123.entitysuppressor.utils.math.RootMath;
 
 public class ESEntityListener implements Listener {
 	private EntitySuppressor m;
@@ -39,11 +39,12 @@ public class ESEntityListener implements Listener {
 						if (m.uSFlags == true) {
 							w.setSpawnFlags(false, w.getAllowAnimals());
 							if (m.d == true) {
-								m.l.info("ES Debug: Monsters Disabled in " + w.getName());
+								m.l.info("Debug: Monsters Disabled in `" + w.getName() + '`');
 							}
 						}
 					}
-					if (m.uRemoveM == true) {
+					if (m.uRemoveM == true
+							&& w.getPlayers().size() > 0) {
 						int i = 0;
 						int pdc = 0;
 						double sdist = 0;
@@ -61,7 +62,7 @@ public class ESEntityListener implements Listener {
 						if (pdc == i) {
 							e.setCancelled(true);
 							if (m.d == true) {
-								m.l.info("ES Debug: Distance too great (" + (int)RootMath.sqrt((float)sdist) + "), cancelled spawn.");
+								m.l.info("Debug: Distance too great (" + (int)RootMath.sqrt((float)sdist) + "), cancelled spawn.");
 							}
 						}
 					}
@@ -73,7 +74,7 @@ public class ESEntityListener implements Listener {
 					if (m.uSFlags == true) {
 						w.setSpawnFlags(w.getAllowMonsters(), false);
 						if (m.d == true) {
-							m.l.info("ES Debug: Monsters Disabled in " + w.getName());
+							m.l.info("Debug: Monsters Disabled in `" + w.getName() + '`');
 						}
 					}
 				}
@@ -85,7 +86,7 @@ public class ESEntityListener implements Listener {
 				if (m.d == true 
 						&& !e.isCancelled()
 						&& (e.getEntity() instanceof Animals)) {
-					m.l.info("ES Debug: Spawned " + e.getEntityType().name() + " in " + w.getName());
+					m.l.info("Debug: Spawned a " + e.getEntityType().name() + " in `" + w.getName() + '`');
 				}
 			}
 		}

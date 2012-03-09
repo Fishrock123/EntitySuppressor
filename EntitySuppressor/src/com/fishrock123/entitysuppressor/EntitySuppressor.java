@@ -13,6 +13,8 @@ import org.bukkit.entity.Monster;
 import org.bukkit.entity.Squid;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.fishrock123.entitysuppressor.utils.Metrics;
+
 public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
 	public int i;
 	public Map<String, ESWorld> eswLookup = new HashMap<String, ESWorld>();
@@ -52,16 +54,16 @@ public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
   		getServer().getPluginManager().registerEvents(eListener, this);
 		
 		try {
-		    Metrics metrics = new Metrics();
+		    Metrics metrics = new Metrics(this);
+		    
+		    metrics.addCustomData(totalEntities);
+		    metrics.addCustomData(totalMobs);
+		    metrics.addCustomData(totalMonsters);
+		    metrics.addCustomData(totalAnimals);
+		    metrics.addCustomData(totalSquid);
+		    metrics.addCustomData(totalLoadedChunks);
 
-		    metrics.addCustomData(this, totalEntities);
-		    metrics.addCustomData(this, totalMobs);
-		    metrics.addCustomData(this, totalMonsters);
-		    metrics.addCustomData(this, totalAnimals);
-		    metrics.addCustomData(this, totalSquid);
-		    metrics.addCustomData(this, totalLoadedChunks);
-
-		    metrics.beginMeasuringPlugin(this);
+		    metrics.start();
 		    
 		} catch (IOException e) {
 		    l.info(e.getMessage());
@@ -84,9 +86,9 @@ public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
   		for (Entry<String, ESWorld> e : eswLookup.entrySet()) {
   			ESWorld esw = e.getValue();
   			l.info("Current Maximums for `" + e.getKey() + "`:" 
-  			+ (esw.hasMonsterMaximum() ? " Monsters(" + methods.getCurrentMax(esw, Monster.class) + ")" : "") 
-  			+ (esw.hasAnimalMaximum() ? " Animals(" + methods.getCurrentMax(esw, Animals.class) + ")"  : "") 
-  			+ (esw.hasSquidMaximum() ? " Squid(" + methods.getCurrentMax(esw, Squid.class) + ")"   : "")
+  			+ (esw.hasMonsterMaximum() ? " Monsters(" + methods.getCurrentMax(esw, Monster.class) + ')' : "") 
+  			+ (esw.hasAnimalMaximum() ? " Animals(" + methods.getCurrentMax(esw, Animals.class) + ')'  : "") 
+  			+ (esw.hasSquidMaximum() ? " Squid(" + methods.getCurrentMax(esw, Squid.class) + ')'   : "")
   			);
   		}
 		

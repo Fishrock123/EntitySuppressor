@@ -3,6 +3,8 @@ package com.fishrock123.entitysuppressor;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
+import com.fishrock123.entitysuppressor.utils.Metrics;
+
 public interface CustomPlotters {
 	Metrics.Plotter totalEntities = new Metrics.Plotter("Entities") {
         @Override
