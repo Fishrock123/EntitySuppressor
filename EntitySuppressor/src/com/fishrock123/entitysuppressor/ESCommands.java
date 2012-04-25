@@ -48,6 +48,8 @@ public class ESCommands {
 		        
 		        scanner.deinit();
 		        
+		        m.eswLookup.clear();
+		        
 		        m.reloadConfig();
 				
 		        m.initialize();
@@ -91,7 +93,7 @@ public class ESCommands {
 						continue;
 					}
 					
-					s.sendMessage("ES: " + w.getLoadedChunks().length + " chunks loaded in `" + w.getName() + "` (CCM: " + ((double)w.getLoadedChunks().length / 256D) + ')');
+					s.sendMessage("ES: " + w.getLoadedChunks().length + " chunks loaded in `" + w.getName() + "` (CCM: " + (w.getLoadedChunks().length >> 8) + ')'); //Integer bit hacking, >> 8 is equal / 256
 					s.sendMessage("ES: Maximum monsters in `" + w.getName() + "` is: " + methods.getCurrentMax(w, Monster.class));
 					s.sendMessage("ES: Maximum squid in `" + w.getName() + "` is: " + methods.getCurrentMax(w, Squid.class));
 					s.sendMessage("ES: Maximum animals in `" + w.getName() + "` is: " + methods.getCurrentMax(w, Animals.class));

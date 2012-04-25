@@ -47,14 +47,15 @@ public class ESMethods {
 		if (m.eswLookup != null
 				&& esw != null) {
 			
+			//Integer bit hacking, >> 8 is equal to / 256
 			if (c == null) {
-				return ((esw.getpChunkAnimalMaximum() * esw.getLoadedChunks()) / 256) + ((esw.getpChunkSquidMaximum() * esw.getLoadedChunks()) / 256) + ((esw.getpChunkMonsterMaximum() * esw.getLoadedChunks()) / 256);
+				return ((esw.getpChunkAnimalMaximum() * esw.getLoadedChunks()) >> 8) + ((esw.getpChunkSquidMaximum() * esw.getLoadedChunks()) >> 8) + ((esw.getpChunkMonsterMaximum() * esw.getLoadedChunks()) >> 8);
 			}
 			if (c.equals(Monster.class) 
 					&& esw.hasMonsterMaximum()) {
 				if (esw.haspChunkMonsterMaximum()
-						&& ((esw.getpChunkMonsterMaximum() * esw.getLoadedChunks()) / 256) <= esw.getMonsterMaximum()) {
-						return ((esw.getpChunkMonsterMaximum() * esw.getLoadedChunks()) / 256);
+						&& ((esw.getpChunkMonsterMaximum() * esw.getLoadedChunks()) >> 8) <= esw.getMonsterMaximum()) {
+						return ((esw.getpChunkMonsterMaximum() * esw.getLoadedChunks()) >> 8);
 				} else {
 					return esw.getMonsterMaximum();
 				}
@@ -62,8 +63,8 @@ public class ESMethods {
 			if (c.equals(Squid.class)  
 					&& esw.hasSquidMaximum()) {
 				if (esw.haspChunkSquidMaximum()
-						&& ((esw.getpChunkSquidMaximum() * esw.getLoadedChunks()) / 256) <= esw.getSquidMaximum()) {
-						return ((esw.getpChunkSquidMaximum() * esw.getLoadedChunks()) / 256);
+						&& ((esw.getpChunkSquidMaximum() * esw.getLoadedChunks()) >> 8) <= esw.getSquidMaximum()) {
+						return ((esw.getpChunkSquidMaximum() * esw.getLoadedChunks()) >> 8);
 				} else {
 					return esw.getSquidMaximum();
 				}
@@ -71,8 +72,8 @@ public class ESMethods {
 			if (c.equals(Animals.class)  
 					&& esw.hasAnimalMaximum()) {
 				if (esw.haspChunkAnimalMaximum()
-						&& ((esw.getpChunkAnimalMaximum() * esw.getLoadedChunks()) / 256) <= esw.getAnimalMaximum()) {
-						return ((esw.getpChunkAnimalMaximum() * esw.getLoadedChunks()) / 256);
+						&& ((esw.getpChunkAnimalMaximum() * esw.getLoadedChunks()) >> 8) <= esw.getAnimalMaximum()) {
+						return ((esw.getpChunkAnimalMaximum() * esw.getLoadedChunks()) >> 8);
 				} else {
 					return esw.getAnimalMaximum();
 				}

@@ -15,16 +15,14 @@ public class RootMath {
 	
 	/**
 	 * Accurate approximation for a floating-point square root.
-	 * Roughly 1.2 times as fast as java.lang.Math.sqrt(x);
+	 * Roughly 1.2x as fast as java.lang.Math.sqrt(x);
 	 * 
 	 * @param number
 	 * @return float square root
 	 */
 	public static float sqrt(float f) {
-	    float xhalf = f * 0.5F;
-	    int i = Float.floatToIntBits(f); 	// evil floating point bit level hacking
-	    i = 0x5f375a86 - (i >> 1); 			// gives initial guess -- Use 0x5f375a86 instead of 0x5f3759df, due to slight accuracy increase. (Credit to Chris Lomont)
-	  	float y = Float.intBitsToFloat(i); 	// convert bits back to float
+		final float xhalf = f * 0.5F;
+	  	float y = Float.intBitsToFloat(0x5f375a86 - (Float.floatToIntBits(f) >> 1)); // evil floating point bit level hacking -- Use 0x5f375a86 instead of 0x5f3759df, due to slight accuracy increase. (Credit to Chris Lomont)
 	    y = y * (1.5F - (xhalf * y * y)); 	// Newton step, repeating increases accuracy
 	    y = y * (1.5F - (xhalf * y * y));
 	    return f * y;
@@ -38,8 +36,6 @@ public class RootMath {
 	 * @return float square root approximation
 	 */
 	public static float sqrtApprox(float f) {
-	    int i = Float.floatToIntBits(f);	 	// evil floating point bit level hacking
-	    i = 0x5f375a86 - (i >> 1);				// gives initial guess -- Use 0x5f375a86 instead of 0x5f3759df, due to slight accuracy increase. (Credit to Chris Lomont)
-	    return f * Float.intBitsToFloat(i); 	// convert bits back to float and multiply
+	    return f * Float.intBitsToFloat(0x5f375a86 - (Float.floatToIntBits(f) >> 1)); // evil floating point bit level hacking -- Use 0x5f375a86 instead of 0x5f3759df, due to slight accuracy increase. (Credit to Chris Lomont)
 	}
 }

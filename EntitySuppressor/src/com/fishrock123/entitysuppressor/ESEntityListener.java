@@ -20,18 +20,16 @@ public class ESEntityListener implements Listener {
 		methods = m.methods;
 	}
 
-	@EventHandler (priority = EventPriority.HIGH)
+	@EventHandler (priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onCreatureSpawn(CreatureSpawnEvent e) {
 		World w = e.getLocation().getWorld();
 		ESWorld esw = methods.getESWorld(w.getName());
 		
-		if (!e.isCancelled() 
-				&& esw != null) {
+		if (esw != null) {
 			
 			if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL 
 					|| (e.getSpawnReason() != CreatureSpawnEvent.SpawnReason.SPAWNER 
 							|| (esw.haslSpawners() == true && esw.getlSpawners() == true))) {
-					
 				if (e.getEntity() instanceof Monster
 						&& m.lMonsters == true) {
 					if (ESMethods.countMonsters(w) >= methods.getCurrentMax(w, Monster.class)) {

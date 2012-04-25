@@ -1,14 +1,14 @@
-package com.fishrock123.entitysuppressor;
+package com.fishrock123.entitysuppressor.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
-import com.fishrock123.entitysuppressor.utils.Metrics;
+import com.fishrock123.entitysuppressor.ESMethods;
 
 public interface CustomPlotters {
 	Metrics.Plotter totalEntities = new Metrics.Plotter("Entities") {
         @Override
-        public int getValue() {
+        public synchronized int getValue() {
         	int count = 0;
         	for (World w : Bukkit.getWorlds()) {
         		count += w.getEntities().size();
@@ -19,7 +19,7 @@ public interface CustomPlotters {
 	
 	Metrics.Plotter totalMobs = new Metrics.Plotter("Mobs") {
         @Override
-        public int getValue() {
+        public synchronized int getValue() {
         	int count = 0;
         	for (World w : Bukkit.getWorlds()) {
         		count += w.getLivingEntities().size() - w.getPlayers().size();
@@ -30,7 +30,7 @@ public interface CustomPlotters {
     
     Metrics.Plotter totalMonsters = new Metrics.Plotter("Monsters") {
         @Override
-        public int getValue() {
+        public synchronized int getValue() {
         	int count = 0;
         	for (World w : Bukkit.getWorlds()) {
         		count += ESMethods.countMonsters(w);
@@ -41,7 +41,7 @@ public interface CustomPlotters {
     
     Metrics.Plotter totalAnimals = new Metrics.Plotter("Animals") {
         @Override
-        public int getValue() {
+        public synchronized int getValue() {
         	int count = 0;
         	for (World w : Bukkit.getWorlds()) {
         		count += ESMethods.countAnimals(w);
@@ -52,7 +52,7 @@ public interface CustomPlotters {
     
     Metrics.Plotter totalSquid = new Metrics.Plotter("Squid") {
         @Override
-        public int getValue() {
+        public synchronized int getValue() {
         	int count = 0;
         	for (World w : Bukkit.getWorlds()) {
         		count += ESMethods.countSquid(w);
@@ -63,7 +63,7 @@ public interface CustomPlotters {
     
     Metrics.Plotter totalLoadedChunks = new Metrics.Plotter("Loaded Chunks") {
         @Override
-        public int getValue() {
+        public synchronized int getValue() {
         	int count = 0;
         	for (World w : Bukkit.getWorlds()) {
         		count += w.getLoadedChunks().length;

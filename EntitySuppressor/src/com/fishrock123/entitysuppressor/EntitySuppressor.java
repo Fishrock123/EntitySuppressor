@@ -13,6 +13,7 @@ import org.bukkit.entity.Monster;
 import org.bukkit.entity.Squid;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.fishrock123.entitysuppressor.utils.CustomPlotters;
 import com.fishrock123.entitysuppressor.utils.Metrics;
 
 public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
@@ -102,7 +103,6 @@ public class EntitySuppressor extends JavaPlugin implements CustomPlotters {
 
 	@Override
 	public boolean onCommand(CommandSender s, Command cmd, String cLabel, String[] args) {
-		boolean bol = commands.commandProcess(s, cmd, cLabel, args);
-		return bol;
+		return commands.commandProcess(s, cmd, cLabel, args);
 	}
 }
