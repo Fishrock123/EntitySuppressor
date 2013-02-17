@@ -3,10 +3,9 @@ package com.fishrock123.entitysuppressor.utils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
-import com.fishrock123.entitysuppressor.ESMethods;
 
 public interface CustomPlotters {
-	Metrics.Plotter totalEntities = new Metrics.Plotter("Entities") {
+	Metrics.Plotter entitiesRatio = new Metrics.Plotter("All Entities") {
         @Override
         public synchronized int getValue() {
         	int count = 0;
@@ -17,7 +16,7 @@ public interface CustomPlotters {
         }
     };
 	
-	Metrics.Plotter totalMobs = new Metrics.Plotter("Mobs") {
+	Metrics.Plotter mobsRatio = new Metrics.Plotter("Mobs") {
         @Override
         public synchronized int getValue() {
         	int count = 0;
@@ -28,40 +27,62 @@ public interface CustomPlotters {
         }
     };
     
-    Metrics.Plotter totalMonsters = new Metrics.Plotter("Monsters") {
+    Metrics.Plotter monstersRatio = new Metrics.Plotter("Monsters") {
         @Override
         public synchronized int getValue() {
         	int count = 0;
         	for (World w : Bukkit.getWorlds()) {
-        		count += ESMethods.countMonsters(w);
+        		count += Utils.countMonsters(w);
         	}
             return count;
         }
     };
     
-    Metrics.Plotter totalAnimals = new Metrics.Plotter("Animals") {
+    Metrics.Plotter animalsRatio = new Metrics.Plotter("Animals") {
         @Override
         public synchronized int getValue() {
         	int count = 0;
         	for (World w : Bukkit.getWorlds()) {
-        		count += ESMethods.countAnimals(w);
+        		count += Utils.countAnimals(w);
         	}
             return count;
         }
     };
     
-    Metrics.Plotter totalSquid = new Metrics.Plotter("Squid") {
+    Metrics.Plotter squidRatio = new Metrics.Plotter("Squid") {
         @Override
         public synchronized int getValue() {
         	int count = 0;
         	for (World w : Bukkit.getWorlds()) {
-        		count += ESMethods.countSquid(w);
+        		count += Utils.countWater(w);
         	}
             return count;
         }
     };
     
-    Metrics.Plotter totalLoadedChunks = new Metrics.Plotter("Loaded Chunks") {
+    Metrics.Plotter batRatio = new Metrics.Plotter("Bats") {
+        @Override
+        public synchronized int getValue() {
+        	int count = 0;
+        	for (World w : Bukkit.getWorlds()) {
+        		count += Utils.countAmbient(w);
+        	}
+            return count;
+        }
+    };
+    
+    Metrics.Plotter npcRatio = new Metrics.Plotter("Villagers") {
+        @Override
+        public synchronized int getValue() {
+        	int count = 0;
+        	for (World w : Bukkit.getWorlds()) {
+        		count += Utils.countAllTheTESTIFICATES(w);
+        	}
+            return count;
+        }
+    };
+    
+    Metrics.Plotter loadedChunksPerWorld = new Metrics.Plotter("Loaded Chunks") {
         @Override
         public synchronized int getValue() {
         	int count = 0;

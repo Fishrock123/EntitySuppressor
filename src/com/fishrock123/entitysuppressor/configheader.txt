@@ -1,6 +1,6 @@
 ###############################################################
 
- EntitySuppressor v2 Configuration
+ EntitySuppressor v3 Configuration
  
      Developer: Fishrock123
           Report bugs and feature requests to: http://dev.bukkit.org/server-mods/entitysuppressor/tickets/
@@ -11,42 +11,35 @@
           http://dev.bukkit.org/server-mods/entitysuppressor/forum/
 
  REMEMBER: Animals are Mobs too!
- 
- ##############################################################
- 
- In brackets following suggested values are general setting levels, this is a rough guide:
- 
- Very Low: Under 2GB ram, Under 2Ghz processor speed. (~1-6 players)
- Low: 3 - 4GB ram, 2 - 2.3Ghz processor speed. (~6-12 players)
- Medium (mid): 4 - 6GB ram, 2.3 - 2.7Ghz processor speed. (~12-24 players)
- High: 6 - 8+ GB ram, 2.8+Ghz processor speed. (~24-32+ players)
 
 ###############################################################
+
 
  Set what the plugin should limit.
  LimitMonsters: true / false
  LimitSquid: true / false
  LimitAnimals: true / false
- 
+ LimitNPCs: true / false (Alternate: LimitTESTIFICATES: true / false)
+ LimitBats: true / false 
+
 
  Set the total maximum monsters per world.
  MonsterMaximums:
-   world: 128 (very low) / 256 (low) / 512 (mid) / 1024 (high)
-   world_nether: 128 (very low) / 256 (low) / 512 (mid) / 1024 (high)
-   world_the_end: 256 (no less than this)
+   world: ~ 32-64 per player
+   world_nether: ~ 32-64 per player
+   world_the_end: ~ 32-64 per player
   
  Set the total maximum squid per world.
  SquidMaximums:
-   world: 16 (very low) / 32 (low) / 64 (mid) / 128 (high)
+   world: ~ 1-4 per player
    
  Set the total maximum animals per world.
  AnimalMaximums:
-   world: 64 (very low) / 128 (low) 256 (mid) / 512 (high)
+   world: ~ 12-24 per player
    
    
  The dynamic chunk-calculated maximums are calculated using this formula:
- ( ( Number of loaded chunks ) times ( config value ) ) divided by ( 256 )
- (loaded_chunks * X) / 256
+ (loaded_chunks * config_value) / 256
    
  Set the dynamically calculated maximum monsters per world.
  ChunkCalculatedMonsterMaximums:
@@ -64,6 +57,9 @@
 
  Set number of server ticks between checks to allow additional mobs.
  ScanInterval: 100
+
+ Set how many entities' distances should be checked for removal per scan.
+ EntitiesPerScan: 64
  
  
  Set whether to use dynamic monster removal and spawn prevention (Increases difficulty back to that of vanilla)
@@ -72,28 +68,28 @@
  Set the distance at which any mobs farther away from all players should be removed each scan.
  RemoveAtDistance: 128
  
- Set the distance at which monsters will have their spawn's cancelled.
+ Set the distance at which monsters will have their spawn's canceled.
  CancelSpawnAtDistance: 92
+
+ Set if monster's spawns should be canceled if their height is not close to the players' heights.
+ OnlySpawnOnCloseLayers: true / false
+
+ Set the maximum number of layers above or below that a monster can spawn on.
+ MaximumSpawnLayerDeviation: 20
+
+
+ Set the number of ticks between the times the server tries to spawn monsters.
+ TicksPerMonsterSpawns: 10
+
+ Set the number of ticks between the times the server tries to spawn animals.
+ TicksPerAnimalSpawns: 800
+
+
+ Set whether to keep the spawn chunks in memory.
+ KeepSpawnChunksInMemory: true / false
  
 
  Get extra debugging information
  Debug: true / false
-
-#######   OUTDATED SETTINGS - REMOVE IF YOU HAVE THEM #######
-
-    ESConfigVersion
-        Removed.
-        
-    checkDifference
-        Replaced by a square root function.
-
-    maxMonsters / DefaultMaximum
-        Removed, everything must now be set per world.
-
-    nonLimitedWorlds:
-        Removed, set that world's maximum to 9001.
-        
-    SpawnFlagsCheckInterval:
-        Replaced by ScanInterval.
 
 ###############################################################

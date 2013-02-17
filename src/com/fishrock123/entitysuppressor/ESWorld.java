@@ -1,51 +1,37 @@
 package com.fishrock123.entitysuppressor;
 
+import java.util.LinkedList;
+
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 
 public class ESWorld {
-	private String name;
-	private int loadedChunks = 0;
-	private short MonsterMaximum;
-	private short SquidMaximum;
-	private short AnimalMaximum;
-	private short pChunkMonsterMaximum;
-	private short pChunkSquidMaximum;
-	private short pChunkAnimalMaximum;
-	private boolean lSpawners = true;
+	public String name;
+	public int loadedChunks = 0;
+	public int MonsterMax;
+	public int WaterMax;
+	public int AnimalMax;
+	public int AmbientMax;
+	public int NPCMax;
+	public int ccMonsterMax;
+	public int ccWaterMax;
+	public int ccAnimalMax;
+	public int ccAmbientMax;
+	public int ccNPCMax;
+	private LinkedList<QueuedSpawn> queue = new LinkedList<QueuedSpawn>();
 	
 	public ESWorld(World w) {
 		this(w.getName());
 	}
 	
-	public ESWorld(String s) {
-		name = s;
+	public ESWorld(String name) {
+		this.name = name;
 	}
 	
 	public void update(Integer i) {
 		loadedChunks = i;
-	}
-	
-	public void setMonsterMaximum(int i) {
-		MonsterMaximum = (short)i;
-	}
-	public void setSquidMaximum(int i) {
-		SquidMaximum = (short)i;
-	}
-	public void setAnimalMaximum(int i) {
-		AnimalMaximum = (short)i;
-	}
-	public void setpChunkMonsterMaximum(int i) {
-		pChunkMonsterMaximum = (short)i;
-	}
-	public void setpChunkSquidMaximum(int i) {
-		pChunkSquidMaximum = (short)i;
-	}
-	public void setpChunkAnimalMaximum(int i) {
-		pChunkAnimalMaximum = (short)i;
-	}
-	public void setlSpawners(boolean b) {
-		lSpawners = b;
 	}
 	
 	public World getWorld() {
@@ -54,71 +40,63 @@ public class ESWorld {
 	public String getName() {
 		return name;
 	}
-	public int getLoadedChunks() {
-		return loadedChunks;
-	}
-	public int getMonsterMaximum() {
-		return MonsterMaximum;
-	}
-	public int getSquidMaximum() {
-		return SquidMaximum;
-	}
-	public int getAnimalMaximum() {
-		return AnimalMaximum;
-	}
-	public int getpChunkMonsterMaximum() {
-		return pChunkMonsterMaximum;
-	}
-	public int getpChunkSquidMaximum() {
-		return pChunkSquidMaximum;
-	}
-	public int getpChunkAnimalMaximum() {
-		return pChunkAnimalMaximum;
-	}
-	public boolean getlSpawners() {
-		return lSpawners;
+	
+	public void queueSpawn(Location loc, Entity e) {
+		if (queue.size() < 20) {
+			queue.add(new QueuedSpawn(loc, e.getType()));
+		}
 	}
 	
-	public boolean hasMonsterMaximum() {
-		if (MonsterMaximum > 0) {
-			return true;
-		}
-		return false;
+	public void spawn(World world) {
+		world.spawnEntity(queue.getFirst().loc, queue.getFirst().type);
+		queue.removeFirst();
 	}
-	public boolean hasSquidMaximum() {
-		if (SquidMaximum > 0) {
-			return true;
-		}
-		return false;
+	
+	public boolean hasQueuedSpawn() {
+		return queue.size() > 0;
 	}
-	public boolean hasAnimalMaximum() {
-		if (AnimalMaximum > 0) {
-			return true;
-		}
-		return false;
+	
+	public void setMaxByString(String key, int value) {
+		if (key == "MonsterMaximums") MonsterMax = value;
+		else if (key == "SquidMaximums") WaterMax = value;
+		else if (key == "AnimalMaximums") AnimalMax = value;
+		else if (key == "BatMaximums") AmbientMax = value;
+		else if (key == "NPCMaximums") NPCMax = value;
+		else if (key == "ChunkCalculatedMonsterMaximums") ccMonsterMax = value;
+		else if (key == "ChunkCalculatedSquidMaximums") ccWaterMax = value;
+		else if (key == "ChunkCalculatedAnimalMaximums") ccAnimalMax = value;
+		else if (key == "ChunkCalculatedBatMaximums") ccAmbientMax = value;
+		else if (key == "ChunkCalculatedNPCMaximums") ccNPCMax = value;
 	}
-	public boolean haspChunkMonsterMaximum() {
-		if (pChunkMonsterMaximum > 0) {
-			return true;
-		}
-		return false;
+	
+	public boolean hasMonsterMax() {
+		return MonsterMax >= 0 ?  true : false;
 	}
-	public boolean haspChunkSquidMaximum() {
-		if (pChunkSquidMaximum > 0) {
-			return true;
-		}
-		return false;
+	public boolean hasWaterMax() {
+		return WaterMax >= 0 ?  true : false;
 	}
-	public boolean haspChunkAnimalMaximum() {
-		if (pChunkAnimalMaximum > 0) {
-			return true;
-		}
-		return false;
+	public boolean hasAnimalMax() {
+		return AnimalMax >= 0 ?  true : false;
 	}
-	public boolean haslSpawners() {
-		if (lSpawners) {
-			return true;
-		}
-		return false;
+	public boolean hasAmbientMax() {
+		return AmbientMax >= 0 ?  true : false;
+	}
+	public boolean hasNPCMax() {
+		return NPCMax >= 0 ?  true : false;
+	}
+	public boolean hasCCMonsterMax() {
+		return ccMonsterMax >= 0 ?  true : false;
+	}
+	public boolean hasCCWaterMax() {
+		return ccWaterMax >= 0 ?  true : false;
+	}
+	public boolean hasCCAnimalMax() {
+		return ccAnimalMax >= 0 ?  true : false;
+	}
+	public boolean hasCCAmbientMax() {
+		return ccAmbientMax >= 0 ?  true : false;
+	}
+	public boolean hasCCNPCMax() {
+		return ccNPCMax >= 0 ?  true : false;
 	}
 }

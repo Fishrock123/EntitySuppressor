@@ -1,6 +1,6 @@
 name: EntitySuppressor
-main: com.fishrock123.entitysuppressor.EntitySuppressor
-version: 2.2.2 (1P2)
+main: com.fishrock123.entitysuppressor.ESPlugin
+version: 3.0 (1Q0)
 author: Fishrock123
 website: http://dev.bukkit.org/server-mods/entitysuppressor/
 dev-url: http://dev.bukkit.org/server-mods/entitysuppressor/
@@ -16,10 +16,10 @@ commands:
         usage: 
             /es count <world / all>
             
-            /es remove <monsters / animals / squid / all> <world / all>
+            /es remove <monsters / animals / squid / bats / npcs / all> <world / all>
 permissions:
   esuppressor.*:
-    description: Gives access to all DecoyBlocks commands
+    description: Gives access to all EntitySuppressor commands
     children:
       esuppressor.reload: true
       esuppressor.remove: true
